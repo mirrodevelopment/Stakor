@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STAKOR - Customer Profile Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400..900&family=Tektur:wght@400..900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f6ff;
+      --card: #fff;
+      --ink: #17142b;
+      --muted: #766f91;
+      --line: rgba(30, 20, 70, .10);
+      --violet: #7c5cff;
+      --violet2: #5634d9;
+      --cyan: #1cc7d6;
+      --green: #23c78a;
+      --gold: #f2b84b;
+      --pink: #ff5d9e;
+      --shadow: 0 24px 70px -35px rgba(74, 49, 180, .45);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Tektur, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 500px at 80% -10%, rgba(124, 92, 255, .20), transparent 60%),
+        radial-gradient(700px 500px at 15% 20%, rgba(28, 199, 214, .14), transparent 60%), var(--bg);
+    }
+
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(124, 92, 255, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(124, 92, 255, .045) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at 50% 20%, #000, transparent 70%);
+      pointer-events: none
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Lexend Giga', sans-serif;
+      margin: 0
+    }
+
+    h1 {
+      font-size: clamp(22px, 3.5vw, 36px);
+      line-height: 1.25;
+    }
+
+    h2 {
+      font-size: clamp(18px, 2.8vw, 26px);
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: clamp(16px, 2.2vw, 20px);
+      line-height: 1.4;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      min-height: 100vh
+    }
+
+    .sidebar {
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, .82);
+      backdrop-filter: blur(24px);
+      border-right: 1px solid var(--line);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 10px 16px;
+      font: 800 24px 'Lexend Giga', sans-serif
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      box-shadow: 0 15px 35px -15px var(--violet);
+      animation: float 4s ease-in-out infinite
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 13px 14px;
+      border-radius: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: .25s
+    }
+
+    .nav button:hover {
+      transform: translateX(4px);
+      background: rgba(124, 92, 255, .08);
+      color: var(--violet2)
+    }
+
+    .nav button.active {
+      background: linear-gradient(90deg, rgba(124, 92, 255, .16), rgba(28, 199, 214, .06));
+      color: var(--violet2);
+      box-shadow: inset 3px 0 var(--violet)
+    }
+
+    .ico {
+      width: 22px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    .ico-svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .primary {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      background: white;
+      color: #3d2aa0;
+      box-shadow: 0 14px 25px -18px #000;
+      transition: .2s
+    }
+
+    .premium button:hover,
+    .primary:hover {
+      transform: translateY(-2px)
+    }
+
+    .main {
+      padding: 22px 32px 60px
+    }
+
+    .topbar {
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px
+    }
+
+    .search {
+      flex: 1;
+      max-width: 520px;
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 10px 18px;
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+      box-shadow: 0 12px 30px -24px #000;
+      align-items: center;
+    }
+
+    .search input {
+      border: 0;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      min-width: 0;
+      flex: 1;
+      font-family: Tektur, sans-serif;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .search input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-icon {
+      font-size: 18px;
+    }
+
+    .chip {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      border-radius: 18px
+    }
+
+    .chip img,
+    .avatar img {
+      object-fit: cover;
+      border-radius: 50%
+    }
+
+    .chip img,
+    .chip-letter {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--gold);
+      border-radius: 50%
+    }
+
+    .chip-letter {
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+      font-family: 'Lexend Giga', sans-serif;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(246, 243, 255, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow:
+        0 24px 70px -35px rgba(74, 49, 180, .3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+      margin-bottom: 22px;
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+    }
+
+    .hero:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(120deg, transparent, rgba(124, 92, 255, .18), transparent);
+      transform: translateX(-100%);
+      animation: shine 5s infinite
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.2fr repeat(2, 1fr);
+      gap: 18px;
+      align-items: stretch
+    }
+
+    .profile-card {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .profile-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .avatar {
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 18px 35px -24px #000
+    }
+
+    .avatar img,
+    .avatar-letter {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%
+    }
+
+    .avatar-letter {
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 42px;
+      font-weight: 800;
+      font-family: 'Lexend Giga', sans-serif;
+      text-transform: uppercase;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .tier {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      background: linear-gradient(135deg, #fff1c9, #f2b84b);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin: 8px 0
+    }
+
+    .xp {
+      height: 8px;
+      border-radius: 99px;
+      background: rgba(124, 92, 255, .12);
+      overflow: hidden;
+      margin-top: 10px
+    }
+
+    .xp span {
+      display: block;
+      height: 100%;
+      width: 72%;
+      background: linear-gradient(90deg, var(--violet), var(--cyan));
+      border-radius: 99px;
+      animation: grow 1.4s ease
+    }
+
+    .stat {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 22px;
+      padding: 22px;
+      transition: .25s;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 15px 35px -10px rgba(124, 92, 255, 0.1),
+        inset 0 1px 1px rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+    }
+
+    .stat:hover,
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 55px -35px var(--violet)
+    }
+
+    .stat b {
+      font-size: clamp(24px, 3.5vw, 34px);
+      font-family: 'Lexend Giga', sans-serif;
+      font-weight: 800;
+    }
+
+    .stat p {
+      margin: 8px 0;
+      color: var(--muted)
+    }
+
+    .stat a {
+      color: var(--violet2);
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 13px
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.08fr 1fr;
+      gap: 22px
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 26px;
+      padding: 24px;
+      box-shadow:
+        0 15px 35px -10px rgba(124, 92, 255, 0.1),
+        inset 0 1px 1px rgba(255, 255, 255, 0.8);
+      transition: .25s;
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+    }
+
+    .dark {
+      background: linear-gradient(135deg, rgba(32, 24, 74, 0.8), rgba(16, 13, 36, 0.6));
+      color: white;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow:
+        0 15px 35px -10px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+    }
+
+    .dark:after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 92, 255, .32), transparent 65%);
+      right: -80px;
+      top: -80px;
+      pointer-events: none;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 34px 160px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .10);
+      position: relative
+    }
+
+    .row:last-child {
+      border-bottom: 0
+    }
+
+    .label {
+      color: #b9b2d7;
+      font-size: 13px
+    }
+
+    .value {
+      font-weight: 700;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px
+    }
+
+    .mini {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 99px;
+      padding: 4px 9px;
+      background: rgba(35, 199, 138, .13);
+      color: var(--green)
+    }
+
+    .menu-page {
+      display: none;
+      animation: rise .35s ease
+    }
+
+    .menu-page.active {
+      display: block
+    }
+
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin: 10px 0 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .page-head>div {
+      min-width: 250px;
+      flex: 1;
+    }
+
+    .page-head p {
+      color: var(--muted);
+      margin: 6px 0 0
+    }
+
+    .cards3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .game-card {
+      min-height: 170px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(242, 239, 255, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 26px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: .25s;
+      box-shadow:
+        0 15px 35px -10px rgba(124, 92, 255, 0.1),
+        inset 0 1px 1px rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+    }
+
+    .game-card:hover {
+      transform: translateY(-6px) scale(1.01)
+    }
+
+    .game-card:after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      right: -35px;
+      bottom: -35px;
+      background: radial-gradient(circle, rgba(124, 92, 255, .22), transparent 65%)
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 99px;
+      background: rgba(124, 92, 255, .12);
+      color: var(--violet2);
+      font-weight: 800;
+      font-size: 12px
+    }
+
+    .progress {
+      height: 10px;
+      background: rgba(124, 92, 255, .12);
+      border-radius: 99px;
+      overflow: hidden
+    }
+
+    .progress i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--violet), var(--cyan));
+      border-radius: 99px
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px
+    }
+
+    .table td,
+    .table th {
+      text-align: left;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.45);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .table th {
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .table td:first-child,
+    .table th:first-child {
+      border-radius: 16px 0 0 16px
+    }
+
+    .table td:last-child,
+    .table th:last-child {
+      border-radius: 0 16px 16px 0
+    }
+
+    .toast {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      background: #15112a;
+      color: white;
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 20px 45px -20px #000;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: .25s;
+      z-index: 10000
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-5px) rotate(5deg)
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes shine {
+
+      50%,
+      100% {
+        transform: translateX(100%)
+      }
+    }
+
+    @keyframes grow {
+      from {
+        width: 0
+      }
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* Mobile Header Navigation Container */
+    .mobile-nav-container {
+      display: none;
+    }
+
+    .mobile-dropdown-bar {
+      display: none;
+    }
+
+    /* Card Header Class replacement */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Table Responsiveness */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 15px;
+      scrollbar-width: thin;
+    }
+
+    .table-responsive::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-responsive::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 3px;
+    }
+
+    /* Media Queries */
+    @media (max-width: 1024px) {
+      .app {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      /* Mobile Nav Sticky Container */
+      .mobile-nav-container {
+        display: block;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--line);
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 20px 4px;
+        width: 100%;
+      }
+
+      .mobile-header .brand {
+        padding: 0;
+        font-size: 22px;
+      }
+
+      /* Separate bar for dropdown immediately above search bar */
+      .mobile-dropdown-bar {
+        display: flex;
+        justify-content: center;
+        padding: 0 0 16px;
+        width: 100%;
+      }
+
+      /* Custom Dropdown for Mobile Navigation */
+      .mobile-dropdown-container {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .dropdown-trigger {
+        background: rgba(124, 92, 255, 0.08);
+        border: 1px solid var(--line);
+        color: var(--violet2);
+        padding: 10px 16px;
+        border-radius: 14px;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: Tektur, sans-serif;
+        font-size: 14px;
+        transition: all 0.2s ease;
+      }
+
+      .dropdown-trigger:hover, 
+      .dropdown-trigger:focus {
+        background: rgba(124, 92, 255, 0.14);
+        transform: translateY(-1px);
+      }
+
+      .dropdown-current-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .dropdown-arrow {
+        display: inline-flex;
+        align-items: center;
+        transition: transform 0.2s ease;
+      }
+
+      .mobile-dropdown-container.active .dropdown-arrow {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 8px;
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        box-shadow: 0 10px 30px -10px rgba(74, 49, 180, 0.25);
+        z-index: 1000;
+        transform: translateY(10px);
+        opacity: 0;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+
+      .mobile-dropdown-container.active .dropdown-menu {
+        display: flex;
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .dropdown-menu button {
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        padding: 10px 14px;
+        border-radius: 12px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 14px;
+        text-align: left;
+        width: 100%;
+        transition: all 0.25s ease;
+      }
+
+      .dropdown-menu button:hover {
+        background: rgba(124, 92, 255, 0.08);
+        color: var(--violet2);
+        transform: translateX(3px);
+      }
+
+      .dropdown-menu button.active {
+        background: linear-gradient(90deg, rgba(124, 92, 255, 0.12), rgba(28, 199, 214, 0.04));
+        color: var(--violet2);
+        box-shadow: inset 3px 0 var(--violet);
+      }
+
+      /* Hide Sidebar Completely */
+      .sidebar {
+        display: none !important;
+      }
+
+      .main {
+        padding: 20px;
+        width: 100%;
+        min-width: 0;
+      }
+
+      .topbar {
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      .search {
+        max-width: none;
+        width: 100%;
+      }
+
+      /* Responsive wrap for cards */
+      .cards3 {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      /* Personal Info Stack layout for Mobile & Tablet */
+      .row {
+        grid-template-columns: 30px 1fr;
+        gap: 8px 12px;
+        align-items: flex-start;
+        padding: 12px 0;
+      }
+
+      .row span:first-child {
+        grid-row: 1 / 3;
+        margin-top: 2px;
+      }
+
+      .row .label {
+        grid-column: 2;
+        font-size: 12px;
+      }
+
+      .row .value {
+        grid-column: 2;
+        font-size: 14px;
+        word-break: break-all;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .main {
+        padding: 16px 12px 30px;
+      }
+
+      .page-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 16px;
+        width: 100%;
+      }
+
+      .page-head .primary {
+        width: 100%;
+        text-align: center;
+      }
+
+      .page-head h1 {
+        font-size: 20px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
+
+      .page-head p {
+        font-size: 13px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .hero {
+        padding: 20px;
+        border-radius: 20px;
+        width: 100%;
+      }
+
+      .avatar {
+        width: 90px;
+        height: 90px;
+        flex-shrink: 0;
+      }
+
+      .avatar-letter {
+        font-size: 32px;
+      }
+
+      .profile-card h2 {
+        font-size: 20px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .profile-card p {
+        font-size: 13px;
+        word-break: break-all;
+      }
+
+      /* Stack items vertically inside .mini */
+      .mini {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .mini button {
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Stack items vertically inside Security header */
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .card-header button {
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Toast custom layout */
+      .toast {
+        right: 16px;
+        left: 16px;
+        bottom: 16px;
+        text-align: center;
+      }
+
+      /* Modal styling details */
+      .modal-content {
+        padding: 20px 16px;
+        width: 92%;
+      }
+
+      .modal-header h2 {
+        font-size: 18px;
+      }
+
+      .form-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+      }
+
+      .form-actions button {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+      }
+    }
+
+    /* Modal Styling */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(23, 20, 43, 0.6);
+      backdrop-filter: blur(8px);
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 9999;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: var(--shadow);
+      transform: translateY(30px);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .modal-header h2 {
+      font-size: 22px;
+      font-family: 'Lexend Giga', sans-serif;
+      color: var(--ink);
+    }
+
+    .modal-close {
+      border: 0;
+      background: rgba(124, 92, 255, 0.1);
+      color: var(--violet2);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: 0.2s;
+    }
+
+    .modal-close:hover {
+      background: var(--violet);
+      color: white;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      background: rgba(124, 92, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: var(--ink);
+      font-family: Tektur, sans-serif;
+      font-weight: 500;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--violet);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.15);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn-cancel {
+      border: 0;
+      background: rgba(124, 92, 255, 0.08);
+      color: var(--violet2);
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: Tektur, sans-serif;
+      transition: 0.2s;
+    }
+
+    .btn-cancel:hover {
+      background: rgba(124, 92, 255, 0.15);
+    }
+
+    .btn-save {
+      border: 0;
+      background: linear-gradient(135deg, var(--violet), var(--violet2));
+      color: white;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: Tektur, sans-serif;
+      box-shadow: 0 8px 20px -8px var(--violet);
+      transition: 0.2s;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -8px var(--violet);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mobile-nav-container">
+    <header class="mobile-header">
+      <div class="brand" onclick="window.location.href='/'" style="cursor: pointer;">
+        <img class="mark" src="images/STAKOR1.png" alt="S">STAKOR
+      </div>
+    </header>
+  </div>
+
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand" onclick="window.location.href='/'" style="cursor: pointer;">
+        <img class="mark" src="images/STAKOR1.png" alt="S">STAKOR
+      </div>
+      <nav class="nav" id="nav">
+        <button class="active" data-page="dashboard"><span class="ico"><svg class="ico-svg" width="18" height="18"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg></span>Dashboard</button>
+        <button data-page="stack"><span class="ico"><svg class="ico-svg" width="18" height="18" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg></span>My Stack</button>
+        <button data-page="orders"><span class="ico"><svg class="ico-svg" width="18" height="18" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+              </path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg></span>Orders</button>
+        <button data-page="subscription"><span class="ico"><svg class="ico-svg" width="18" height="18"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg></span>Subscription</button>
+        <button data-page="addresses"><span class="ico"><svg class="ico-svg" width="18" height="18" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg></span>Addresses</button>
+
+        <!-- User chip at bottom of sidebar -->
+        <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--line);">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:16px;background:rgba(124,92,255,0.06);">
+            <div id="sidebar-avatar" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--cyan));display:grid;place-items:center;font-weight:800;font-family:'Lexend Giga',sans-serif;color:white;font-size:16px;flex-shrink:0;" id="disp-sidebar-letter">?</div>
+            <div style="min-width:0;flex:1;">
+              <div id="sidebar-user-name" style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Loading...</div>
+              <div id="sidebar-user-email" style="color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</div>
+            </div>
+          </div>
+          <button onclick="logout()" style="width:100%;margin-top:10px;border:0;background:rgba(255,93,158,0.08);color:var(--pink);padding:10px 14px;border-radius:14px;display:flex;gap:10px;align-items:center;font-weight:700;cursor:pointer;font-family:Tektur,sans-serif;font-size:13px;transition:.2s;" onmouseover="this.style.background='rgba(255,93,158,0.16)'" onmouseout="this.style.background='rgba(255,93,158,0.08)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sign Out
+          </button>
+        </div>
+      </nav>
+    </aside>
+    <main class="main">
+      <div class="mobile-dropdown-bar">
+        <div class="mobile-dropdown-container">
+          <button class="dropdown-trigger" id="dropdown-trigger" onclick="toggleMobileDropdown(event)">
+            <span style="display: flex; gap: 8px; align-items: center;">
+              <span class="dropdown-current-icon" id="dropdown-current-icon">
+                <svg class="ico-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </span>
+              <span class="dropdown-current-text" id="dropdown-current-text">Dashboard</span>
+            </span>
+            <span class="dropdown-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="dropdown-menu nav" id="dropdown-menu">
+            <button class="active" data-page="dashboard"><span class="ico"><svg class="ico-svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg></span>Dashboard</button>
+            <button data-page="stack"><span class="ico"><svg class="ico-svg" width="18" height="18" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg></span>My Stack</button>
+            <button data-page="orders"><span class="ico"><svg class="ico-svg" width="18" height="18" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                  </path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg></span>Orders</button>
+            <button data-page="subscription"><span class="ico"><svg class="ico-svg" width="18" height="18" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg></span>Subscription</button>
+            <button data-page="addresses"><span class="ico"><svg class="ico-svg" width="18" height="18" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg></span>Addresses</button>
+          </div>
+        </div>
+      </div>
+      <div class="topbar">
+        <div class="search">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="search-input" placeholder="Search products, orders, insights..."
+            oninput="handleSearch(this.value)">
+        </div>
+      </div>
+
+      <section id="dashboard" class="menu-page active">
+        <div class="hero">
+          <div class="hero-grid">
+            <div class="profile-card">
+              <div class="avatar">
+                <div class="avatar-letter" id="disp-avatar-letter">A</div>
+              </div>
+              <div class="profile-info">
+                <h2 id="disp-name-card">Arjun Sharma</h2>
+                <p style="color:var(--muted);margin:6px 0 0;" id="disp-email-card">arjun.sharma@gmail.com</p>
+              </div>
+            </div>
+            <div class="stat"><span class="pill">Orders</span><br><br><b data-count="24">0</b>
+              <p>Total orders placed</p><a href="#" onclick="openPage('orders')">View Orders →</a>
+            </div>
+            <div class="stat"><span class="pill">Premium Stack</span><br><br>
+              <h3 id="dash-plan-status">Active</h3>
+              <p id="dash-plan-billing">Next billing: 12 Jun 2026</p><a href="#" onclick="openPage('subscription')">Manage →</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card dark">
+            <div class="card-header">
+              <h3>Personal Information</h3>
+              <button class="primary" onclick="openEditModal()" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: none; font-size: 13px; padding: 6px 14px; border-radius: 12px; transition: 0.2s;">✎ Edit</button>
+            </div>
+            <div class="row"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg></span><span class="label">Full Name</span><span class="value" id="val-name">Arjun Sharma</span>
+            </div>
+            <div class="row"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg></span><span class="label">Email</span><span class="value"
+                id="val-email">arjun.sharma@gmail.com</span></div>
+            <div class="row"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                  </path>
+                </svg></span><span class="label">Phone</span><span class="value" id="val-phone">+91 98765 43210</span>
+            </div>
+            <div class="row"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg></span><span class="label">Date of Birth</span><span class="value" id="val-dob">14 Feb
+                1992</span></div>
+            <div class="row"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                  </path>
+                </svg></span><span class="label">Occupation</span><span class="value" id="val-occupation">Software
+                Engineer</span></div>
+            <div class="row"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                  </path>
+                </svg></span><span class="label">Language</span><span class="value" id="val-language">English</span>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="card mini">
+              <div>
+                <h3>Address <span class="tag" id="disp-address-tag">Home</span></h3>
+                <p id="disp-address-text">123, Green Park Avenue,<br>Sector 45, Gurugram, Haryana</p>
+              </div><button class="primary" onclick="openAddressModal()">Edit</button>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3>Security</h3>
+                <button class="primary" onclick="openSecurityModal()">Edit</button>
+              </div>
+              <p>Password: <span id="disp-password">••••••••</span></p>
+              <p>Two-Factor Authentication: <b id="disp-2fa" style="color:var(--green)">Enabled</b></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="stack" class="menu-page">
+        <div class="page-head">
+          <div>
+            <h1>My Stack</h1>
+            <p>Game-style supplement stack progress and active modules.</p>
+          </div><button class="primary" onclick="window.location.href='/collections'">Build New Stack</button>
+        </div>
+        <div class="cards3">
+          <div class="game-card"><span class="pill">CORE</span>
+            <h2>Daily Foundation</h2>
+            <p>Blueberry · 28 servings left</p>
+            <div class="progress"><i style="width:72%"></i></div>
+          </div>
+          <div class="game-card"><span class="pill">SATIETY</span>
+            <h2>Meal Control</h2>
+            <p>Green module · 18 servings left</p>
+            <div class="progress"><i style="width:48%"></i></div>
+          </div>
+          <div class="game-card"><span class="pill">PROTEIN</span>
+            <h2>Strength Support</h2>
+            <p>Orange module · 22 servings left</p>
+            <div class="progress"><i style="width:64%"></i></div>
+          </div>
+        </div>
+      </section>
+      <section id="orders" class="menu-page">
+        <div class="page-head">
+          <div>
+            <h1>Orders</h1>
+            <p>Track purchases, invoices and delivery status.</p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th>Order</th>
+              <th>Items</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+            <tr>
+              <td>#STK-1042</td>
+              <td>Core + Protein</td>
+              <td><span class="tag">Delivered</span></td>
+              <td>₹3,499</td>
+            </tr>
+            <tr>
+              <td>#STK-1037</td>
+              <td>Premium Stack</td>
+              <td><span class="tag">In Transit</span></td>
+              <td>₹5,999</td>
+            </tr>
+            <tr>
+              <td>#STK-1028</td>
+              <td>Satiety</td>
+              <td><span class="tag">Delivered</span></td>
+              <td>₹1,899</td>
+            </tr>
+          </table>
+        </div>
+      </section>
+      <section id="subscription" class="menu-page">
+        <div class="page-head">
+          <div>
+            <h1>Subscription</h1>
+            <p id="sub-plan-desc">Premium Stack renews on 12 Jun 2026.</p>
+          </div><button class="primary" id="btn-pause-plan" onclick="togglePlanPause()">Pause Plan</button>
+        </div>
+        <div class="cards3">
+          <div class="game-card">
+            <h2>Premium Stack</h2>
+            <p>Monthly wellness delivery</p>
+            <h1>₹5,999</h1>
+          </div>
+          <div class="game-card">
+            <h2>Next Billing</h2>
+            <p>12 Jun 2026</p>
+            <div class="progress"><i style="width:60%"></i></div>
+          </div>
+          <div class="game-card">
+            <h2>Perks</h2>
+            <p>Free shipping, rewards boost, early access.</p>
+          </div>
+        </div>
+      </section>
+      <section id="addresses" class="menu-page">
+        <div class="page-head">
+          <div>
+            <h1>Addresses</h1>
+            <p>Saved delivery locations.</p>
+          </div><button class="primary" onclick="openAddAddressModal()">+ Add Address</button>
+        </div>
+        <div class="cards3">
+          <div class="game-card"><span class="tag" id="addr-home-tag">Home</span>
+            <h2 id="addr-home-title">Green Park Avenue</h2>
+            <p id="addr-home-desc">Gurugram, Haryana - 122003</p>
+          </div>
+          <div class="game-card"><span class="tag">Office</span>
+            <h2>Cyber City</h2>
+            <p>Gurugram, Haryana</p>
+          </div>
+          <div class="game-card"><span class="tag">Quick</span>
+            <h2>Default Delivery</h2>
+            <p>Home address selected</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast">Done</div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal" id="edit-profile-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Profile Details</h2>
+        <button class="modal-close" onclick="closeEditModal()">×</button>
+      </div>
+      <form id="edit-profile-form" onsubmit="saveProfile(event)">
+        <div class="form-group">
+          <label for="input-name">Full Name</label>
+          <input type="text" id="input-name" required>
+        </div>
+        <div class="form-group">
+          <label for="input-email">Email</label>
+          <input type="email" id="input-email" required>
+        </div>
+        <div class="form-group">
+          <label for="input-phone">Phone</label>
+          <input type="text" id="input-phone" required>
+        </div>
+        <div class="form-group">
+          <label for="input-dob">Date of Birth</label>
+          <input type="text" id="input-dob" required>
+        </div>
+        <div class="form-group">
+          <label for="input-occupation">Occupation</label>
+          <input type="text" id="input-occupation" required>
+        </div>
+        <div class="form-group">
+          <label for="input-language">Language</label>
+          <input type="text" id="input-language" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+          <button type="submit" class="btn-save">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Security Settings Modal -->
+  <div class="modal" id="security-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Security Settings</h2>
+        <button class="modal-close" onclick="closeSecurityModal()">×</button>
+      </div>
+      <form id="security-form" onsubmit="saveSecurity(event)">
+        <div class="form-group">
+          <label for="input-password">New Password</label>
+          <input type="password" id="input-password" placeholder="Enter new password">
+        </div>
+        <div class="form-group">
+          <label for="input-2fa">Two-Factor Authentication</label>
+          <select id="input-2fa"
+            style="width:100%; background: rgba(124, 92, 255, 0.04); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; color: var(--ink); font-family: Tektur, sans-serif; font-weight: 500; outline: none; transition: 0.2s;">
+            <option value="Enabled">Enabled</option>
+            <option value="Disabled">Disabled</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeSecurityModal()">Cancel</button>
+          <button type="submit" class="btn-save">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Address Modal -->
+  <div class="modal" id="address-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Address</h2>
+        <button class="modal-close" onclick="closeAddressModal()">×</button>
+      </div>
+      <form id="address-form" onsubmit="saveAddress(event)">
+        <div class="form-group">
+          <label for="input-address-tag">Tag</label>
+          <input type="text" id="input-address-tag" required>
+        </div>
+        <div class="form-group">
+          <label for="input-address-line1">Address Line 1</label>
+          <input type="text" id="input-address-line1" required>
+        </div>
+        <div class="form-group">
+          <label for="input-address-line2">Address Line 2</label>
+          <input type="text" id="input-address-line2" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeAddressModal()">Cancel</button>
+          <button type="submit" class="btn-save">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Address Modal -->
+  <div class="modal" id="add-address-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add New Address</h2>
+        <button class="modal-close" onclick="closeAddAddressModal()">×</button>
+      </div>
+      <form id="add-address-form" onsubmit="addNewAddress(event)">
+        <div class="form-group">
+          <label for="input-add-tag">Tag</label>
+          <input type="text" id="input-add-tag" required placeholder="Home, Office, Work...">
+        </div>
+        <div class="form-group">
+          <label for="input-add-line1">Address Title</label>
+          <input type="text" id="input-add-line1" required placeholder="Green Park Avenue">
+        </div>
+        <div class="form-group">
+          <label for="input-add-line2">Address Details</label>
+          <input type="text" id="input-add-line2" required placeholder="Gurugram, Haryana - 122003">
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeAddAddressModal()">Cancel</button>
+          <button type="submit" class="btn-save">Add Address</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleMobileDropdown(event) {
+      if (event) event.stopPropagation();
+      const container = document.querySelector('.mobile-dropdown-container');
+      if (container) {
+        container.classList.toggle('active');
+      }
+    }
+
+    // Close mobile dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const container = document.querySelector('.mobile-dropdown-container');
+      if (container && !container.contains(event.target)) {
+        container.classList.remove('active');
+      }
+    });
+
+    function openPage(id) {
+      document.querySelectorAll('.menu-page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === id));
+      
+      // Update mobile dropdown active selection display
+      const activeBtn = document.querySelector(`.dropdown-menu button[data-page="${id}"]`);
+      if (activeBtn) {
+        const triggerText = document.getElementById('dropdown-current-text');
+        const triggerIcon = document.getElementById('dropdown-current-icon');
+        if (triggerText) triggerText.textContent = activeBtn.textContent.trim();
+        if (triggerIcon) {
+          const iconSpan = activeBtn.querySelector('.ico');
+          if (iconSpan) triggerIcon.innerHTML = iconSpan.innerHTML;
+        }
+      }
+      const container = document.querySelector('.mobile-dropdown-container');
+      if (container) {
+        container.classList.remove('active');
+      }
+    }
+
+    // Add navigation click event listeners
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetPage = btn.getAttribute('data-page');
+        openPage(targetPage);
+      });
+    });
+
+    /* --- Modal logic --- */
+    function openEditModal() {
+      // Pre-fill inputs with current values
+      document.getElementById('input-name').value = document.getElementById('val-name').textContent;
+      document.getElementById('input-email').value = document.getElementById('val-email').textContent;
+      document.getElementById('input-phone').value = document.getElementById('val-phone').textContent;
+      document.getElementById('input-dob').value = document.getElementById('val-dob').textContent;
+      document.getElementById('input-occupation').value = document.getElementById('val-occupation').textContent;
+      document.getElementById('input-language').value = document.getElementById('val-language').textContent;
+
+      document.getElementById('edit-profile-modal').classList.add('active');
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-profile-modal').classList.remove('active');
+    }
+
+    function saveProfile(event) {
+      event.preventDefault();
+      
+      const newName = document.getElementById('input-name').value;
+      const newEmail = document.getElementById('input-email').value;
+
+      // Update text values
+      document.getElementById('val-name').textContent = newName;
+      document.getElementById('val-email').textContent = newEmail;
+      document.getElementById('val-phone').textContent = document.getElementById('input-phone').value;
+      document.getElementById('val-dob').textContent = document.getElementById('input-dob').value;
+      document.getElementById('val-occupation').textContent = document.getElementById('input-occupation').value;
+      document.getElementById('val-language').textContent = document.getElementById('input-language').value;
+
+      // Update card values
+      document.getElementById('disp-name-card').textContent = newName;
+      document.getElementById('disp-email-card').textContent = newEmail;
+
+      // Update avatar initials
+      if (newName) {
+        document.getElementById('disp-avatar-letter').textContent = newName.charAt(0).toUpperCase();
+      }
+
+      closeEditModal();
+      showToast('Profile Saved', 'Personal information has been successfully updated.');
+    }
+
+    // Security Modal Actions
+    function openSecurityModal() {
+      document.getElementById('security-modal').classList.add('active');
+    }
+
+    function closeSecurityModal() {
+      document.getElementById('security-modal').classList.remove('active');
+    }
+
+    function saveSecurity(event) {
+      event.preventDefault();
+      const pass = document.getElementById('input-password').value;
+      const twoFa = document.getElementById('input-2fa').value;
+
+      if (pass) {
+        document.getElementById('disp-password').textContent = '••••••••';
+      }
+      
+      const twoFaEl = document.getElementById('disp-2fa');
+      twoFaEl.textContent = twoFa;
+      if (twoFa === 'Enabled') {
+        twoFaEl.style.color = 'var(--green)';
+      } else {
+        twoFaEl.style.color = 'var(--pink)';
+      }
+
+      closeSecurityModal();
+      showToast('Security Updated', 'Security preferences saved successfully.');
+    }
+
+    // Address Modal Actions
+    function openAddressModal() {
+      document.getElementById('input-address-tag').value = document.getElementById('disp-address-tag').textContent;
+      // Extract line 1 and 2 from br element
+      const fullText = document.getElementById('disp-address-text').innerHTML.split('<br>');
+      document.getElementById('input-address-line1').value = fullText[0] || '';
+      document.getElementById('input-address-line2').value = fullText[1] || '';
+
+      document.getElementById('address-modal').classList.add('active');
+    }
+
+    function closeAddressModal() {
+      document.getElementById('address-modal').classList.remove('active');
+    }
+
+    function saveAddress(event) {
+      event.preventDefault();
+      const tag = document.getElementById('input-address-tag').value;
+      const line1 = document.getElementById('input-address-line1').value;
+      const line2 = document.getElementById('input-address-line2').value;
+
+      document.getElementById('disp-address-tag').textContent = tag;
+      document.getElementById('disp-address-text').innerHTML = `${line1}<br>${line2}`;
+
+      closeAddressModal();
+      showToast('Address Saved', 'Default shipping address has been updated.');
+    }
+
+    // Add Address Modal Actions
+    function openAddAddressModal() {
+      document.getElementById('add-address-modal').classList.add('active');
+    }
+
+    function closeAddAddressModal() {
+      document.getElementById('add-address-modal').classList.remove('active');
+    }
+
+    function addNewAddress(event) {
+      event.preventDefault();
+      const tag = document.getElementById('input-add-tag').value;
+      const title = document.getElementById('input-add-line1').value;
+      const desc = document.getElementById('input-add-line2').value;
+
+      // Update the address template preview cards or show a success toast
+      document.getElementById('addr-home-tag').textContent = tag;
+      document.getElementById('addr-home-title').textContent = title;
+      document.getElementById('addr-home-desc').textContent = desc;
+
+      closeAddAddressModal();
+      showToast('Address Added', 'New delivery address added to list.');
+    }
+
+    // Search trigger helper
+    function handleSearch(val) {
+      console.log('Search query:', val);
+    }
+
+    // Simple toast alert handler
+    function showToast(title, message) {
+      const toast = document.getElementById('toast');
+      toast.innerHTML = `<strong>${title}</strong>: ${message}`;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    /* ── Load signed-in user details into the profile dashboard ── */
+    function setField(id, value) {
+      const el = document.getElementById(id);
+      if (el && value) el.textContent = value;
+    }
+
+    function populateProfile(name, email, phone) {
+      // Avatar initial letter
+      const initial = (name || '?')[0].toUpperCase();
+      setField('disp-avatar-letter', initial);
+      const topChipLetter = document.getElementById('topbar-chip-letter');
+      if (topChipLetter) topChipLetter.textContent = initial;
+
+      // Hero card
+      setField('disp-name-card', name || '—');
+      setField('disp-email-card', email || '—');
+
+      // Personal info rows
+      setField('val-name', name || '—');
+      setField('val-email', email || '—');
+      setField('val-phone', phone || '—');
+
+      // Sidebar user chip (if present)
+      const sidebarName = document.getElementById('sidebar-user-name');
+      const sidebarEmail = document.getElementById('sidebar-user-email');
+      if (sidebarName) sidebarName.textContent = name || '—';
+      if (sidebarEmail) sidebarEmail.textContent = email || '—';
+
+      // Edit modal pre-fill
+      const inputName = document.getElementById('input-name');
+      const inputEmail = document.getElementById('input-email');
+      const inputPhone = document.getElementById('input-phone');
+      if (inputName) inputName.value = name || '';
+      if (inputEmail) inputEmail.value = email || '';
+      if (inputPhone) inputPhone.value = phone || '';
+    }
+
+    function loadUserProfile() {
+      const email = localStorage.getItem('stakor_user_email');
+      const isLoggedIn = localStorage.getItem('stakor_logged_in') === 'true';
+
+      // Redirect to login if not authenticated
+      if (!isLoggedIn || !email) {
+        window.location.href = '/login';
+        return;
+      }
+
+      // Instant paint from cached values
+      const cachedName = localStorage.getItem('stakor_user_name') || '';
+      populateProfile(cachedName, email, '');
+
+      // Fetch full profile from server
+      fetch(`/api/auth/me?email=${encodeURIComponent(email)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.name || data.email) {
+            // Cache fresh name
+            if (data.name) localStorage.setItem('stakor_user_name', data.name);
+            populateProfile(data.name, data.email, data.phone);
+          }
+        })
+        .catch(() => {
+          // If server unreachable, still show cached data — already painted above
+        });
+    }
+
+    // Logout handler
+    function logout() {
+      localStorage.removeItem('stakor_logged_in');
+      localStorage.removeItem('stakor_user_email');
+      localStorage.removeItem('stakor_user_name');
+      window.location.href = '/login';
+    }
+
+    // Smooth count-up stat animation
+    document.querySelectorAll('.stat b').forEach(b => {
+      const target = parseInt(b.getAttribute('data-count') || '0', 10);
+      let count = 0;
+      const speed = Math.max(10, Math.floor(1500 / target));
+      const interval = setInterval(() => {
+        count++;
+        b.textContent = count;
+        if (count >= target) {
+          clearInterval(interval);
+        }
+      }, speed);
+    });
+
+    let isPlanPaused = false;
+    function togglePlanPause() {
+      const btn = document.getElementById('btn-pause-plan');
+      const dashStatus = document.getElementById('dash-plan-status');
+      const dashBilling = document.getElementById('dash-plan-billing');
+      const subDesc = document.getElementById('sub-plan-desc');
+      
+      isPlanPaused = !isPlanPaused;
+      
+      if (isPlanPaused) {
+        if (btn) btn.textContent = 'Resume Plan';
+        if (dashStatus) dashStatus.textContent = 'Paused';
+        if (dashBilling) dashBilling.textContent = 'Billing paused';
+        if (subDesc) subDesc.textContent = 'Premium Stack is paused. Relaunch plan to resume billing.';
+        showToast('Subscription Paused', 'Your monthly wellness delivery has been paused.');
+      } else {
+        if (btn) btn.textContent = 'Pause Plan';
+        if (dashStatus) dashStatus.textContent = 'Active';
+        if (dashBilling) dashBilling.textContent = 'Next billing: 12 Jun 2026';
+        if (subDesc) subDesc.textContent = 'Premium Stack renews on 12 Jun 2026.';
+        showToast('Subscription Resumed', 'Your active plan has been restored successfully.');
+      }
+    }
+
+    // Run on load
+    document.addEventListener('DOMContentLoaded', loadUserProfile);
+  </script>
+</body>
+</html>

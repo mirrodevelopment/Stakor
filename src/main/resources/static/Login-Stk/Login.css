@@ -161,9 +161,9 @@ spline-viewer::part(logo) {
    MAIN CARD — Dark Liquid Glass
    ═════════════════════════════════════════════ */
 .login-container {
-    width: 1140px;
+    width: 920px;
     max-width: 96vw;
-    height: 720px;
+    height: 570px;
     display: flex;
     overflow: hidden;
     position: relative;
@@ -225,7 +225,7 @@ spline-viewer::part(logo) {
    ═════════════════════════════════════════════ */
 .left-panel {
     width: 44%;
-    padding: 36px 42px;
+    padding: 24px 34px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -256,7 +256,7 @@ spline-viewer::part(logo) {
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    margin-bottom: 22px;
+    margin-bottom: 14px;
     position: relative;
     z-index: 1;
 }
@@ -1245,4 +1245,202 @@ spline-viewer::part(logo) {
 
 .shake {
     animation: shake 0.4s ease;
+}
+
+/* ── Policy Links ── */
+.policy-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    position: relative;
+    z-index: 1;
+}
+
+.policy-link {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    transition: color var(--t-fast);
+    padding: 2px 4px;
+}
+
+.policy-link:hover {
+    color: var(--accent-purple);
+}
+
+.policy-separator {
+    color: var(--text-tertiary);
+    user-select: none;
+}
+
+/* ── Policy Modal Overlay ── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(10, 5, 25, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: opacity var(--t-med);
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: none !important;
+}
+
+/* ── Modal Card ── */
+.modal-card {
+    width: 100%;
+    max-width: 520px;
+    background: linear-gradient(145deg, rgba(40, 20, 90, 0.65) 0%, rgba(15, 8, 35, 0.85) 100%);
+    border: 1px solid var(--glass-border);
+    border-top-color: var(--glass-border-top);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-card);
+    padding: 30px;
+    position: relative;
+    animation: liquidIn 0.5s var(--ease-liquid) both;
+}
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 0;
+    color: var(--text-secondary);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--t-fast);
+    z-index: 2;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.modal-icon {
+    width: 28px;
+    height: 28px;
+    color: var(--gold);
+}
+
+.modal-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.modal-text-lead {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.modal-scroll-box {
+    max-height: 240px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--r-sm);
+    padding: 18px;
+    margin-bottom: 24px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.modal-scroll-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-scroll-box::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+.modal-scroll-box h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.modal-scroll-box p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.modal-scroll-box p:last-child {
+    margin-bottom: 0;
+}
+
+.highlight-title {
+    color: #ff4757 !important;
+}
+
+.highlight-text {
+    background: rgba(255, 71, 87, 0.08);
+    border-left: 3px solid #ff4757;
+    padding: 10px 12px;
+    border-radius: 0 var(--r-xs) var(--r-xs) 0;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-btn-cancel {
+    border: 0;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    border-radius: var(--r-sm);
+    padding: 12px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    transition: all var(--t-fast);
+}
+
+.modal-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+}
+
+.modal-btn-agree {
+    max-width: 180px;
 }
