@@ -2219,23 +2219,38 @@
                 }
             });
 
-            // Remove Spline Logo watermark from all active viewers
+            // Function to hide Spline branding logo in shadow DOM safely
+            function hideSplineLogo(viewer) {
+                if (viewer && viewer.shadowRoot) {
+                    if (!viewer.shadowRoot.querySelector('#hide-logo-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'hide-logo-style';
+                        style.textContent = `
+                            #logo {
+                                display: none !important;
+                                visibility: hidden !important;
+                                opacity: 0 !important;
+                                pointer-events: none !important;
+                            }
+                        `;
+                        viewer.shadowRoot.appendChild(style);
+                    }
+                    const logo = viewer.shadowRoot.querySelector('#logo');
+                    if (logo) {
+                        logo.style.display = 'none';
+                    }
+                }
+            }
+
+            // Remove Spline Logo watermark from all active viewers safely
             let splineAttempts = 0;
             const splineLogoInterval = setInterval(() => {
                 const viewers = document.querySelectorAll('spline-viewer');
-                let foundAllAndRemoved = viewers.length >= 2;
                 viewers.forEach(viewer => {
-                    if (viewer.shadowRoot) {
-                        const logo = viewer.shadowRoot.querySelector('#logo');
-                        if (logo) {
-                            logo.remove();
-                        }
-                    } else {
-                        foundAllAndRemoved = false;
-                    }
+                    hideSplineLogo(viewer);
                 });
                 splineAttempts++;
-                if (foundAllAndRemoved || splineAttempts > 120) {
+                if (splineAttempts > 150) {
                     clearInterval(splineLogoInterval);
                 }
             }, 100);

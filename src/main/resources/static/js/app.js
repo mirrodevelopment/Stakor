@@ -174,20 +174,39 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', resetPill);
     }
 
-    // Remove the Spline logo watermark from the Glass Orb spline-viewer shadow DOM
-    let splineAttempts = 0;
-    const splineLogoInterval = setInterval(() => {
-        const viewer = document.querySelector('.glass-orb spline-viewer');
+    // Function to hide Spline branding logo in shadow DOM
+    function hideSplineLogo(viewer) {
         if (viewer && viewer.shadowRoot) {
+            if (!viewer.shadowRoot.querySelector('#hide-logo-style')) {
+                const style = document.createElement('style');
+                style.id = 'hide-logo-style';
+                style.textContent = `
+                    #logo {
+                        display: none !important;
+                        visibility: hidden !important;
+                        opacity: 0 !important;
+                        pointer-events: none !important;
+                    }
+                `;
+                viewer.shadowRoot.appendChild(style);
+            }
             const logo = viewer.shadowRoot.querySelector('#logo');
             if (logo) {
-                logo.remove();
-                clearInterval(splineLogoInterval);
+                logo.style.display = 'none';
             }
         }
-        splineAttempts++;
-        if (splineAttempts > 100) {
-            clearInterval(splineLogoInterval);
+    }
+
+    // Remove the Spline logo watermark from all spline-viewer shadow DOMs on the page
+    let splineLogoAttempts = 0;
+    const globalSplineLogoInterval = setInterval(() => {
+        const viewers = document.querySelectorAll('spline-viewer');
+        viewers.forEach(v => {
+            hideSplineLogo(v);
+        });
+        splineLogoAttempts++;
+        if (splineLogoAttempts > 150) {
+            clearInterval(globalSplineLogoInterval);
         }
     }, 100);
 

@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const viewer = document.querySelector('.assessment-ai-orb-container spline-viewer');
                 if (viewer) {
                     hideSplineLogo(viewer);
-                    if (viewer.shadowRoot && viewer.shadowRoot.querySelector('#logo') === null) {
+                    if (viewer.shadowRoot && viewer.shadowRoot.querySelector('#hide-logo-style')) {
                         clearInterval(splineLogoInterval);
                     }
                 }
@@ -709,7 +709,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const logo = viewer.shadowRoot.querySelector('#logo');
             if (logo) {
-                logo.remove();
+                logo.style.display = 'none';
             }
         }
     }
