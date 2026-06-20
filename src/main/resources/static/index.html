@@ -2829,16 +2829,19 @@
     }
 
     .s2card-name {
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 900;
       /* Dark near-black — maximum contrast on the glass */
       color: #07132b;
-      line-height: 1.05;
+      line-height: 1.2;
       margin-bottom: 6px;
       /* White lift-shadow = text appears to float on glass */
       text-shadow:
         0 1px 0 rgba(255, 255, 255, 0.90),
         0 0 12px rgba(255, 255, 255, 0.40);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .s2card-divider {
@@ -2859,6 +2862,9 @@
       text-shadow:
         0 1px 0 rgba(255, 255, 255, 0.80),
         0 0 8px rgba(255, 255, 255, 0.25);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* ===== SECTION 2 EXPLORE TOGGLE SWITCHES ===== */
@@ -9632,7 +9638,7 @@
           <div class="s2card-body">
             <h3 class="s2card-name">Energy</h3>
             <div class="s2card-divider blue-bg"></div>
-            <p class="s2card-desc">Feel more alive. Sustain energy from morning to night.</p>
+            <p class="s2card-desc">Sustain energy levels throughout the day.</p>
             <!-- Explore Switch (Blue) -->
             <label class="s2-explore-toggle theme-blue">
               <input type="checkbox" class="s2-explore-toggle-checkbox">
@@ -9649,9 +9655,9 @@
             <img src="images/Weight-Management.png" alt="Weight Management" class="s2card-img">
           </div>
           <div class="s2card-body">
-            <h3 class="s2card-name">Weight<br>Management</h3>
+            <h3 class="s2card-name">Weight Management</h3>
             <div class="s2card-divider green-bg"></div>
-            <p class="s2card-desc">Support a healthy metabolism and maintain your ideal weight.</p>
+            <p class="s2card-desc">Support healthy metabolism and weight.</p>
             <!-- Explore Switch (Green) -->
             <label class="s2-explore-toggle theme-green">
               <input type="checkbox" class="s2-explore-toggle-checkbox">
@@ -9670,7 +9676,7 @@
           <div class="s2card-body">
             <h3 class="s2card-name">Strength</h3>
             <div class="s2card-divider orange-bg"></div>
-            <p class="s2card-desc">Build lean muscle. Improve recovery. Get stronger.</p>
+            <p class="s2card-desc">Build lean muscle and improve recovery.</p>
             <!-- Explore Switch (Orange) -->
             <label class="s2-explore-toggle theme-orange">
               <input type="checkbox" class="s2-explore-toggle-checkbox">
@@ -9687,9 +9693,9 @@
             <img src="images/Metabolic-Health.png" alt="Metabolic Health" class="s2card-img">
           </div>
           <div class="s2card-body">
-            <h3 class="s2card-name">Metabolic<br>Health</h3>
+            <h3 class="s2card-name">Metabolic Health</h3>
             <div class="s2card-divider cyan-bg"></div>
-            <p class="s2card-desc">Balance blood sugar. Improve insulin sensitivity. Fuel better.</p>
+            <p class="s2card-desc">Balance blood sugar and fuel your body.</p>
             <!-- Explore Switch (Cyan) -->
             <label class="s2-explore-toggle theme-cyan">
               <input type="checkbox" class="s2-explore-toggle-checkbox">
@@ -9706,9 +9712,9 @@
             <img src="images/Hormonal-Balance.png" alt="Hormonal Balance" class="s2card-img">
           </div>
           <div class="s2card-body">
-            <h3 class="s2card-name">Hormonal<br>Balance</h3>
+            <h3 class="s2card-name">Hormonal Balance</h3>
             <div class="s2card-divider pink-bg"></div>
-            <p class="s2card-desc">Support hormone balance and feel your best every day.</p>
+            <p class="s2card-desc">Support natural hormone balance and energy.</p>
             <!-- Explore Switch (Pink) -->
             <label class="s2-explore-toggle theme-pink">
               <input type="checkbox" class="s2-explore-toggle-checkbox">
