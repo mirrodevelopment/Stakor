@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STAKOR | Membership</title>
+  <!-- Google Fonts: Inter, Montserrat, Lexend Giga, Tektur, Outfit, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Lexend+Giga:wght@400;500;600;700;800;900&family=Tektur:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/subscription.css">
+  <!-- GSAP & ScrollTrigger Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <style>
+    /* Navbar styles */
+    /* Header Navbar styles - Liquid Glass Effect */
+    nav.header-nav,
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 48px !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      /* Dual reflection layered background for liquid glass effect */
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.25) 100%) !important;
+      backdrop-filter: blur(25px) saturate(190%) !important;
+      -webkit-backdrop-filter: blur(25px) saturate(190%) !important;
+      /* Crisp bottom border reflection - bottom only for full width */
+      border: none !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+      border-radius: 0 !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 1000;
+      font-family: 'Inter', sans-serif;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.35) inset,
+        0 8px 30px rgba(8, 20, 46, 0.03);
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    nav.header-nav:hover,
+    nav:hover {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.35) 100%) !important;
+      border-bottom-color: rgba(255, 255, 255, 0.6) !important;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.4) inset,
+        0 12px 35px rgba(37, 99, 255, 0.05);
+      transform: none !important;
+    }
+
+    nav.header-nav.scroll-hide,
+    nav.scroll-hide {
+      transform: translateY(-100%) !important;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 160px !important;
+      margin: -43px 0 !important;
+      width: auto;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .logo-img:hover {
+      transform: scale(1.05);
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: #0b1b53;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    .nav-links li {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-links a {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 14px;
+      font-weight: 500;
+      color: #4b5b80;
+      text-decoration: none;
+      transition: color .25s;
+      padding: 8px 16px;
+      display: inline-block;
+    }
+
+    .nav-links a:hover {
+      color: #0b1b53;
+    }
+
+    .nav-active>a {
+      color: #0b1b53;
+      font-weight: 600;
+    }
+
+    .nav-active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      background: #2563ff;
+      border-radius: 4px;
+      box-shadow: 0 1px 6px rgba(37, 99, 255, 0.4);
+    }
+
+    /* Sliding glass capsule hover pill */
+    .nav-hover-pill {
+      position: absolute !important;
+      height: 36px !important;
+      background: rgba(37, 99, 255, 0.05) !important;
+      border: 1px solid rgba(37, 99, 255, 0.12) !important;
+      border-radius: 100px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      left: 0;
+      width: 0;
+      opacity: 0;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .nav-cta {
+      background: rgba(255, 255, 255, .55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      color: #0b1b53;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all .3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-cta:hover {
+      background: rgba(255, 255, 255, .8);
+      box-shadow: 0 4px 20px rgba(37, 99, 255, .1);
+      border-color: rgba(37, 99, 255, 0.2);
+    }
+
+    .nav-cta-icon {
+      width: 28px;
+      height: 28px;
+      background: rgba(37, 99, 255, 0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #0b1b53;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover .nav-cta-icon {
+      background: #2563ff;
+      color: #ffffff;
+    }
+
+    .nav-menu-btn {
+      display: none;
+      border: none;
+      background: none;
+    }
+
+    @media (max-width: 1024px) {
+
+      nav.header-nav,
+      nav {
+        padding: 3px 32px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        top: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+      }
+
+      .logo-img {
+        height: 130px !important;
+        margin: -30px 0 !important;
+      }
+
+      .nav-links {
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      nav.header-nav,
+      nav {
+        padding: 2px 20px !important;
+        border-radius: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        top: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+      }
+
+      nav.header-nav.nav-open,
+      nav.nav-open {
+        z-index: 2000 !important;
+        position: sticky;
+      }
+
+      .logo-img {
+        height: 110px !important;
+        margin: -25px 0 !important;
+      }
+
+      .nav-links {
+        display: none;
+      }
+      /* ═════ FUTURISTIC MOBILE MENU ═════ */
+      nav.header-nav.nav-open .nav-links,
+      nav.nav-open .nav-links {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center !important;
+        position: absolute;
+        top: calc(100% + 8px) !important;
+        right: 20px !important;
+        left: auto !important;
+        width: 85% !important;
+        height: 78vh !important;
+        max-height: 78vh !important;
+        background: #f3f5fb !important;
+        background-image:
+          radial-gradient(ellipse at 20% 0%, rgba(37, 99, 255, 0.06) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 100%, rgba(99, 102, 241, 0.04) 0%, transparent 50%) !important;
+        border: 1px solid rgba(37, 99, 255, 0.08) !important;
+        border-radius: 24px !important;
+        padding: 36px 24px 40px !important;
+        gap: 0;
+        box-shadow:
+          0 30px 80px rgba(8, 20, 46, 0.12),
+          0 8px 24px rgba(8, 20, 46, 0.06),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        z-index: 1000;
+        box-sizing: border-box;
+        transform-origin: top right;
+        animation: menuReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        overflow: hidden;
+      }
+
+      nav.header-nav.nav-open .nav-links::before,
+      nav.nav-open .nav-links::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 300%;
+        height: 100%;
+        background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.4) 42%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.4) 58%, transparent 70%);
+        animation: menuShimmer 2.5s ease-in-out 0.6s 1 both;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      nav.header-nav.nav-open .nav-links::after,
+      nav.nav-open .nav-links::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 10%;
+        right: 10%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #2563ff, #6366f1, #2563ff, transparent);
+        opacity: 0.5;
+        z-index: 2;
+        animation: glowLine 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glowLine {
+        0% {
+          opacity: 0.3;
+          filter: blur(1px);
+        }
+
+        100% {
+          opacity: 0.7;
+          filter: blur(0px);
+        }
+      }
+
+      @keyframes menuShimmer {
+        0% {
+          transform: translateX(-40%);
+        }
+
+        100% {
+          transform: translateX(20%);
+        }
+      }
+
+      @keyframes menuReveal {
+        0% {
+          opacity: 0;
+          transform: scaleY(0.3) translateY(-20px);
+        }
+
+        40% {
+          opacity: 0.6;
+          transform: scaleY(0.95) translateY(0);
+        }
+
+        65% {
+          transform: scaleY(1.02);
+        }
+
+        80% {
+          transform: scaleY(0.99);
+        }
+
+        100% {
+          opacity: 1;
+          transform: scaleY(1) translateY(0);
+        }
+      }
+
+      @keyframes navItemSlideIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+
+        50% {
+          opacity: 0.6;
+          transform: translateX(6px);
+        }
+
+        70% {
+          transform: translateX(-2px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes glowPulse {
+
+        0%,
+        100% {
+          box-shadow: 0 0 8px rgba(37, 99, 255, 0.15), inset 0 0 0 rgba(37, 99, 255, 0);
+        }
+
+        50% {
+          box-shadow: 0 0 20px rgba(37, 99, 255, 0.25), inset 0 0 12px rgba(37, 99, 255, 0.03);
+        }
+      }
+
+      nav.header-nav.nav-open .nav-links li,
+      nav.nav-open .nav-links li {
+        width: 100%;
+        text-align: left;
+        opacity: 0;
+        position: relative;
+        z-index: 1;
+        animation: navItemSlideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      nav.header-nav.nav-open .nav-links li:nth-child(1),
+      nav.nav-open .nav-links li:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+
+      nav.header-nav.nav-open .nav-links li:nth-child(2),
+      nav.nav-open .nav-links li:nth-child(2) {
+        animation-delay: 0.35s;
+      }
+
+      nav.header-nav.nav-open .nav-links li:nth-child(3),
+      nav.nav-open .nav-links li:nth-child(3) {
+        animation-delay: 0.5s;
+      }
+
+      nav.header-nav.nav-open .nav-links li:nth-child(4),
+      nav.header-nav.nav-open .nav-links li:nth-child(4) {
+        animation-delay: 0.65s;
+      }
+
+      nav.header-nav.nav-open .nav-links li:nth-child(5),
+      nav.nav-open .nav-links li:nth-child(5) {
+        animation-delay: 0.8s;
+      }
+
+      nav.header-nav.nav-open .nav-links a,
+      nav.nav-open .nav-links a {
+        font-family: 'Tektur', sans-serif !important;
+        font-size: 23px !important;
+        font-weight: 600 !important;
+        letter-spacing: -0.02em;
+        color: #3a4a6b;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 24px 18px 28px;
+        margin: 3px 0;
+        border-radius: 16px;
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        border: 1.5px solid transparent;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+      }
+
+      nav.header-nav.nav-open .nav-links a::before,
+      nav.nav-open .nav-links a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 0;
+        background: linear-gradient(180deg, #2563ff, #6366f1);
+        border-radius: 0 4px 4px 0;
+        transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      nav.header-nav.nav-open .nav-links a::after,
+      nav.nav-open .nav-links a::after {
+        content: '›';
+        position: absolute;
+        right: 24px;
+        font-size: 26px;
+        font-weight: 300;
+        opacity: 0;
+        transform: translateX(-12px);
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        color: #2563ff;
+      }
+
+      nav.header-nav.nav-open .nav-links a:hover,
+      nav.header-nav.nav-open .nav-links a:active,
+      nav.nav-open .nav-links a:hover,
+      nav.nav-open .nav-links a:active {
+        color: #0b1b53;
+        background: linear-gradient(135deg, #ffffff, #f0f4ff);
+        border-color: rgba(37, 99, 255, 0.12);
+        box-shadow: 0 8px 32px rgba(37, 99, 255, 0.10), 0 2px 8px rgba(8, 20, 46, 0.04), inset 0 1px 0 rgba(255, 255, 255, 1);
+        transform: translateX(4px) scale(1.015);
+      }
+
+      nav.header-nav.nav-open .nav-links a:hover::before,
+      nav.nav-open .nav-links a:hover::before {
+        height: 60%;
+      }
+
+      nav.header-nav.nav-open .nav-links a:hover::after,
+      nav.nav-open .nav-links a:hover::after {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      nav.header-nav.nav-open .nav-links a:active,
+      nav.nav-open .nav-links a:active {
+        transform: translateX(4px) scale(0.98) !important;
+        transition-duration: 0.1s !important;
+      }
+
+      nav.header-nav.nav-open .nav-links li.nav-active a,
+      nav.nav-open .nav-links li.nav-active a {
+        color: #2563ff !important;
+        font-weight: 700 !important;
+        background: linear-gradient(135deg, rgba(37, 99, 255, 0.06), rgba(99, 102, 241, 0.03));
+        border-color: rgba(37, 99, 255, 0.15);
+        animation: glowPulse 3s ease-in-out infinite;
+      }
+
+      nav.header-nav.nav-open .nav-links li.nav-active a::before,
+      nav.nav-open .nav-links li.nav-active a::before {
+        height: 50%;
+        background: linear-gradient(180deg, #2563ff, #6366f1);
+        box-shadow: 0 0 12px rgba(37, 99, 255, 0.4);
+      }
+
+      nav.header-nav.nav-open .nav-links li.nav-active::after,
+      nav.nav-open .nav-links li.nav-active::after {
+        display: none;
+      }
+
+      .nav-cta {
+        display: flex !important;
+        font-size: 0 !important; /* Hide text node "Sign In" */
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto !important; /* Push next to hamburger on the right */
+        margin-right: 12px !important; /* Premium spacing before hamburger */
+        min-width: unset !important;
+        width: auto !important;
+        height: auto !important;
+      }
+      .nav-cta-icon {
+        margin: 0 !important;
+        width: 38px !important;
+        height: 38px !important;
+        background: rgba(37, 99, 255, 0.08) !important;
+        border: 1px solid rgba(37, 99, 255, 0.12) !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        color: #2563ff !important;
+        font-size: 16px !important;
+      }
+
+      .nav-menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.6) !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        border: 1.5px solid rgba(37, 99, 255, 0.15) !important;
+        color: #2563ff !important;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 255, 0.05) !important;
+      }
+      .nav-menu-btn:hover, .nav-menu-btn:active {
+        background: rgba(37, 99, 255, 0.06) !important;
+        border-color: rgba(37, 99, 255, 0.3) !important;
+        transform: scale(1.05) !important;
+        box-shadow: 0 4px 18px rgba(37, 99, 255, 0.15) !important;
+      }
+      .nav-menu-btn svg {
+        width: 20px !important;
+        height: 20px !important;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .nav-menu-btn svg line {
+        stroke: currentColor !important;
+        stroke-width: 3px !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      nav.nav-open .nav-menu-btn,
+      nav.header-nav.nav-open .nav-menu-btn {
+        background: rgba(255, 42, 95, 0.06) !important;
+        border-color: rgba(255, 42, 95, 0.3) !important;
+        color: #ff2a5f !important;
+        box-shadow: 0 4px 18px rgba(255, 42, 95, 0.15) !important;
+        transform: scale(1.05) rotate(90deg) !important;
+      }
+    }
+
+    /* Footer styles */
+    .futuristic-footer {
+      background: radial-gradient(circle at 80% 0%, rgba(37, 99, 255, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 20% 90%, rgba(79, 139, 255, 0.02) 0%, transparent 60%),
+        #ffffff;
+      color: #0b1b53;
+      padding: 100px 52px 60px 52px;
+      border-top: 1px solid rgba(37, 99, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Tektur', sans-serif;
+    }
+
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .footer-nav-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 60px;
+    }
+
+    .footer-nav-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-nav-logo-col {
+      padding-right: 40px;
+    }
+
+    .footer-nav-col-title {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: #08142e;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .footer-nav-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-nav-links a {
+      font-family: 'Tektur', sans-serif;
+      font-size: 14px;
+      color: #64748b;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-block;
+    }
+
+    .footer-nav-links a:hover {
+      color: #2563ff;
+      transform: translateX(3px);
+    }
+
+    .footer-trust-indicators {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .footer-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .footer-trust-item svg {
+      width: 14px;
+      height: 14px;
+      color: #10b981;
+    }
+
+    .footer-trust-strip {
+      background: rgba(37, 99, 255, 0.02);
+      border: 1px solid rgba(37, 99, 255, 0.06);
+      border-radius: 20px;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .footer-trust-strip-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .footer-trust-strip-item:not(:last-child) {
+      border-right: 1px solid rgba(37, 99, 255, 0.08);
+    }
+
+    .footer-trust-strip-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      background: #ffffff;
+      border: 1px solid rgba(37, 99, 255, 0.08);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(37, 99, 255, 0.03);
+    }
+
+    .footer-trust-strip-icon svg {
+      width: 20px;
+      height: 20px;
+      color: #2563ff;
+    }
+
+    .footer-trust-strip-label {
+      font-family: 'Tektur', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0b1b53;
+    }
+
+    .footer-legal-bar {
+      border-top: 1px solid rgba(37, 99, 255, 0.08);
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-legal-left {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .footer-legal-center {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-legal-center a {
+      font-size: 13px;
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-legal-center a:hover {
+      color: #2563ff;
+    }
+
+    .footer-legal-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-legal-tagline {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(37, 99, 255, 0.02);
+      border: 1px solid rgba(37, 99, 255, 0.06);
+      color: #64748b;
+      transition: all 0.2s ease;
+    }
+
+    .footer-social-link:hover {
+      background: rgba(37, 99, 255, 0.08);
+      color: #2563ff;
+      transform: translateY(-2px);
+      border-color: rgba(37, 99, 255, 0.2);
+    }
+
+    .footer-social-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      .futuristic-footer {
+        padding: 80px 32px 40px 32px;
+      }
+
+      .footer-nav-grid {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 32px;
+      }
+
+      .footer-nav-logo-col {
+        grid-column: span 3;
+        padding-right: 0;
+        margin-bottom: 16px;
+      }
+
+      .footer-trust-strip {
+        flex-wrap: wrap;
+        padding: 20px;
+      }
+
+      .footer-trust-strip-item {
+        flex: 1 1 40%;
+        justify-content: flex-start;
+      }
+
+      .footer-trust-strip-item:nth-child(even) {
+        border-right: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .futuristic-footer {
+        padding: 60px 20px 30px 20px;
+      }
+
+      .footer-nav-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      .footer-nav-logo-col {
+        grid-column: span 2;
+      }
+
+      .footer-trust-strip {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 20px !important;
+        gap: 12px !important;
+      }
+
+      .footer-trust-strip-item {
+        border-right: none !important;
+        justify-content: flex-start !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px solid rgba(37, 99, 255, 0.04) !important;
+      }
+
+      .footer-trust-strip-item:last-child {
+        border-bottom: none !important;
+      }
+
+      .footer-legal-bar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .footer-legal-right {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body class="sub-body">
+
+  <!-- =========================================================
+         NAVIGATION BAR
+         ========================================================= -->
+  <nav class="header-nav">
+    <a href="/" class="logo">
+      <img src="images/Logo.png" alt="STAKOR" class="logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections">Collections</a></li>
+      <li><a href="/universe">Health Universe</a></li>
+      <li class="nav-active"><a href="/subscribe">Subscription</a></li>
+      <li><a href="/assessment">Assessment</a></li>
+    </ul>
+    <button class="nav-cta" type="button" onclick="window.location.href='/login'">
+      Sign In
+      <span class="nav-cta-icon">👤</span>
+    </button>
+    <button class="nav-menu-btn" type="button" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+        stroke-linecap="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- =========================================================
+         1. HERO SECTION
+         ========================================================= -->
+  <section class="hero-section" id="hero">
+    <!-- Volumetric Background Glow -->
+    <div class="hero-bg-glow"></div>
+    <!-- Floating Particles -->
+    <div class="hero-particles">
+      <span class="hero-particle"
+        style="width: 6px; height: 6px; left: 15%; top: 25%; animation-delay: 0s; animation-duration: 9s;"></span>
+      <span class="hero-particle"
+        style="width: 4px; height: 4px; left: 85%; top: 35%; animation-delay: 1.5s; animation-duration: 11s;"></span>
+      <span class="hero-particle"
+        style="width: 8px; height: 8px; left: 25%; top: 75%; animation-delay: 3s; animation-duration: 10s;"></span>
+      <span class="hero-particle"
+        style="width: 5px; height: 5px; left: 70%; top: 80%; animation-delay: 4.5s; animation-duration: 8s;"></span>
+      <span class="hero-particle"
+        style="width: 3px; height: 3px; left: 50%; top: 15%; animation-delay: 2s; animation-duration: 12s;"></span>
+    </div>
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Left text & badges -->
+        <div class="hero-left">
+          <span class="hero-eyebrow">STAKOR MEMBERSHIP</span>
+          <h1 class="hero-title">Your Health.<br>On Autopilot.</h1>
+          <p class="hero-subtitle">Personalized products. Automatic delivery. Exclusive savings.</p>
+
+          <div class="hero-ctas">
+            <a href="#step-block-1" class="btn-primary">
+              <span>Start Membership</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+            <a href="#step-block-1" class="btn-secondary">Explore Plans</a>
+          </div>
+
+          <div class="hero-features-grid">
+            <div class="hero-feature-badge">
+              <div class="hero-feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <div class="hero-feature-info">
+                <span class="hero-feature-title">Auto Delivery</span>
+                <span class="hero-feature-desc">Always on time</span>
+              </div>
+            </div>
+            <div class="hero-feature-badge">
+              <div class="hero-feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4" />
+                  <path d="M12 8h.01" />
+                </svg>
+              </div>
+              <div class="hero-feature-info">
+                <span class="hero-feature-title">AI Personalized</span>
+                <span class="hero-feature-desc">For your body</span>
+              </div>
+            </div>
+            <div class="hero-feature-badge">
+              <div class="hero-feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <div class="hero-feature-info">
+                <span class="hero-feature-title">Pause Anytime</span>
+                <span class="hero-feature-desc">Total flexibility</span>
+              </div>
+            </div>
+            <div class="hero-feature-badge">
+              <div class="hero-feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="1" x2="12" y2="23" />
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </div>
+              <div class="hero-feature-info">
+                <span class="hero-feature-title">Save More</span>
+                <span class="hero-feature-desc">Up to 25% off</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right orbit visual -->
+        <div class="hero-right">
+          <div class="orbit-system">
+            <!-- Orbit rings -->
+            <div class="orbit-ring outer"></div>
+            <div class="orbit-ring inner"></div>
+
+            <!-- Orbit Nodes (Lego Blocks) -->
+            <div class="orbit-node node-core">
+              <img src="images/Stakor-Core.png" alt="Core" class="bottle core-bottle">
+            </div>
+
+            <div class="orbit-node node-satiety">
+              <img src="images/Stakor-Sateity.png" alt="Satiety" class="bottle satiety-bottle">
+            </div>
+
+            <div class="orbit-node node-balance">
+              <img src="images/Stackor-Balance.png" alt="Balance" class="bottle balance-bottle">
+            </div>
+
+            <div class="orbit-node node-glucose">
+              <img src="images/Stakor-Glucose.png" alt="Glucose" class="bottle glucose-bottle">
+            </div>
+
+            <div class="orbit-node node-protein">
+              <img src="images/Stackor-protein.png" alt="Protein" class="bottle protein-bottle">
+            </div>
+
+            <!-- Volumetric glowing center backdrop behind active card -->
+            <div class="hero-center-glow"></div>
+
+            <!-- Center floating card -->
+            <div class="subscription-active-card">
+              <div class="sub-active-header">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <span class="active-pulse-dot"></span>
+                  Subscription Active
+                </span>
+              </div>
+              <ul class="sub-active-list">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>5 Essentials Included</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>AI Personalized</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Pause Anytime</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Exclusive Pricing</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+         MEMBERSHIP BUILDER JOURNEY Tracker & Stepper
+         ========================================================= -->
+  <!-- Sticky Tracker Navigation -->
+  <div class="journey-tracker-container">
+    <div class="container">
+      <div class="journey-tracker">
+        <div class="tracker-step active" data-step-target="step-block-1">
+          <span class="step-num">1</span>
+          <span class="step-label">Choose Foundation</span>
+        </div>
+        <div class="tracker-line"></div>
+        <div class="tracker-step" data-step-target="step-block-2">
+          <span class="step-num">2</span>
+          <span class="step-label">Customize Stack</span>
+        </div>
+        <div class="tracker-line"></div>
+        <div class="tracker-step" data-step-target="step-block-3">
+          <span class="step-num">3</span>
+          <span class="step-label">Select Cycle</span>
+        </div>
+        <div class="tracker-line"></div>
+        <div class="tracker-step" data-step-target="step-block-4">
+          <span class="step-num">4</span>
+          <span class="step-label">Health Summary</span>
+        </div>
+        <div class="tracker-line"></div>
+        <div class="tracker-step" data-step-target="step-block-5">
+          <span class="step-num">5</span>
+          <span class="step-label">Activate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stepper Sections -->
+  <section class="journey-section">
+    <div class="container">
+
+      <!-- STEP 1: CHOOSE YOUR FOUNDATION -->
+      <div class="journey-step-block active" id="step-block-1">
+        <!-- Volumetric Glow Halos -->
+        <div class="step-glow-halo blue"></div>
+        <div class="step-glow-halo purple"></div>
+
+        <!-- Floating Ambient Particles -->
+        <div class="step-particles">
+          <span class="particle"
+            style="width: 5px; height: 5px; left: 10%; top: 20%; animation-delay: 0s; animation-duration: 8s;"></span>
+          <span class="particle"
+            style="width: 3px; height: 3px; left: 80%; top: 30%; animation-delay: 2s; animation-duration: 10s;"></span>
+          <span class="particle"
+            style="width: 6px; height: 6px; left: 20%; top: 70%; animation-delay: 4s; animation-duration: 9s;"></span>
+          <span class="particle"
+            style="width: 3px; height: 3px; left: 75%; top: 85%; animation-delay: 1.5s; animation-duration: 7s;"></span>
+          <span class="particle"
+            style="width: 4px; height: 4px; left: 8%; top: 60%; animation-delay: 3s; animation-duration: 11s;"></span>
+          <span class="particle"
+            style="width: 3px; height: 3px; left: 88%; top: 15%; animation-delay: 5s; animation-duration: 8s;"></span>
+        </div>
+
+        <div class="step-header-center" style="position: relative; z-index: 10;">
+          <div class="step-badge">STEP 01</div>
+          <h2 class="step-headline">Start With Your Health Foundation</h2>
+          <p class="step-subheadline">Choose the level of support that matches your goals.</p>
+        </div>
+
+        <!-- Progression Indicator Track -->
+        <div class="tier-progression-track" style="position: relative; z-index: 10;">
+          <div class="progression-line-bg">
+            <div class="progression-line-active" id="tierProgressLine" style="width: 50%;"></div>
+          </div>
+          <div class="progression-node" data-tier="foundation" id="node-foundation">
+            <div class="node-bullet"></div>
+            <span class="node-title">Foundation</span>
+            <span class="node-subtitle">Core Support</span>
+          </div>
+          <div class="progression-node active" data-tier="performance" id="node-performance">
+            <div class="node-bullet"></div>
+            <span class="node-title">Performance</span>
+            <span class="node-subtitle">Daily Edge</span>
+          </div>
+          <div class="progression-node" data-tier="complete" id="node-complete">
+            <div class="node-bullet"></div>
+            <span class="node-title">Complete</span>
+            <span class="node-subtitle">Max Optimization</span>
+          </div>
+        </div>
+
+        <!-- Plan Grid -->
+        <div class="journey-plan-grid">
+          <!-- Foundation -->
+          <div class="journey-plan-card" data-plan="foundation" id="card-foundation" style="z-index: 10;">
+            <div class="card-visual-fig single-fig">
+              <svg class="bottle-svg plan-bottle-img single" viewBox="0 0 100 150">
+                <defs>
+                  <linearGradient id="cap-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#08142E" />
+                    <stop offset="50%" stop-color="#2448FF" />
+                    <stop offset="100%" stop-color="#08142E" />
+                  </linearGradient>
+                  <linearGradient id="glass-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#FFFFFF" />
+                    <stop offset="40%" stop-color="#F4F5F7" />
+                    <stop offset="100%" stop-color="#E1E3E8" />
+                  </linearGradient>
+                </defs>
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" shadow="0 2px 4px rgba(0,0,0,0.05)" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#2448FF" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">CORE</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">DAILY BASE</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#2448FF"
+                  text-anchor="middle">FOUNDATION</text>
+              </svg>
+            </div>
+            <div class="card-info-content">
+              <div class="plan-header">
+                <span class="card-grid-badge">DAILY FOUNDATION</span>
+                <h3 class="plan-name">Foundation</h3>
+                <p class="plan-desc">Build your health foundation.</p>
+              </div>
+              <div class="plan-price-label" id="card-price-foundation">₹1,999<span>/mo</span></div>
+
+              <div class="plan-spec-divider"></div>
+              <div class="plan-specs">
+                <div class="spec-item"><span class="spec-lbl">Included Systems:</span> <span class="spec-val">Core
+                    (1)</span></div>
+                <div class="spec-item"><span class="spec-lbl">Health Impact:</span> <span class="spec-val">+5
+                    Score</span></div>
+                <div class="spec-item"><span class="spec-lbl">AI Guidance:</span> <span class="spec-val">Basic</span>
+                </div>
+                <div class="spec-item"><span class="spec-lbl">Delivery:</span> <span class="spec-val">Flexible</span>
+                </div>
+              </div>
+              <button type="button" class="btn-select-plan">Select Foundation</button>
+            </div>
+          </div>
+
+          <!-- Performance -->
+          <div class="journey-plan-card featured active" data-plan="performance" id="card-performance"
+            style="z-index: 10;">
+            <span class="popular-tag">Most Popular</span>
+            <div class="card-visual-fig stacked-fig">
+              <!-- Core Bottle (Overlap) -->
+              <svg class="bottle-svg plan-bottle-img core-overlap" viewBox="0 0 100 150">
+                <defs>
+                  <linearGradient id="cap-grad-perf" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#08142E" />
+                    <stop offset="50%" stop-color="#2448FF" />
+                    <stop offset="100%" stop-color="#08142E" />
+                  </linearGradient>
+                  <linearGradient id="glass-grad-perf" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#FFFFFF" />
+                    <stop offset="40%" stop-color="#F4F5F7" />
+                    <stop offset="100%" stop-color="#E1E3E8" />
+                  </linearGradient>
+                </defs>
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad-perf)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad-perf)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" shadow="0 2px 4px rgba(0,0,0,0.05)" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#2448FF" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">CORE</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">DAILY BASE</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#2448FF"
+                  text-anchor="middle">FOUNDATION</text>
+              </svg>
+              <!-- Protein Bottle (Overlap) -->
+              <svg class="bottle-svg plan-bottle-img protein-overlap" viewBox="0 0 100 150">
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad-perf)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad-perf)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#FF8A00" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">PROTEIN</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">MUSCLE RECOVERY</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#FF8A00"
+                  text-anchor="middle">PERFORMANCE</text>
+              </svg>
+              <!-- Satiety Bottle (Overlap) -->
+              <svg class="bottle-svg plan-bottle-img satiety-overlap" viewBox="0 0 100 150">
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad-perf)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad-perf)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#EC4899" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">SATIETY</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">CRAVING CTRL</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#EC4899"
+                  text-anchor="middle">WEIGHT</text>
+              </svg>
+            </div>
+            <div class="card-info-content">
+              <div class="plan-header">
+                <span class="card-grid-badge" style="color: #a855f7; background: rgba(168, 85, 247, 0.08);">STRENGTH &
+                  ENERGY</span>
+                <h3 class="plan-name">Performance</h3>
+                <p class="plan-desc">Train. Perform. Repeat.</p>
+              </div>
+              <div class="plan-price-label" id="card-price-performance">₹3,999<span>/mo</span></div>
+
+              <div class="plan-spec-divider"></div>
+              <div class="plan-specs">
+                <div class="spec-item"><span class="spec-lbl">Included Systems:</span> <span class="spec-val">Core,
+                    Protein, Satiety (3)</span></div>
+                <div class="spec-item"><span class="spec-lbl">Health Impact:</span> <span class="spec-val">+18
+                    Score</span></div>
+                <div class="spec-item"><span class="spec-lbl">AI Guidance:</span> <span class="spec-val">Included</span>
+                </div>
+                <div class="spec-item"><span class="spec-lbl">Delivery:</span> <span class="spec-val">Flexible</span>
+                </div>
+              </div>
+              <button type="button" class="btn-select-plan">Select Performance</button>
+            </div>
+          </div>
+
+          <!-- Complete -->
+          <div class="journey-plan-card" data-plan="complete" id="card-complete" style="z-index: 10;">
+            <div class="card-visual-fig grid-lineup-fig">
+              <!-- Core Bottle (lineup-1) -->
+              <svg class="bottle-svg plan-bottle-img lineup-1" viewBox="0 0 100 150">
+                <defs>
+                  <linearGradient id="cap-grad-comp" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#08142E" />
+                    <stop offset="50%" stop-color="#2448FF" />
+                    <stop offset="100%" stop-color="#08142E" />
+                  </linearGradient>
+                  <linearGradient id="glass-grad-comp" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#FFFFFF" />
+                    <stop offset="40%" stop-color="#F4F5F7" />
+                    <stop offset="100%" stop-color="#E1E3E8" />
+                  </linearGradient>
+                </defs>
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad-comp)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad-comp)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" shadow="0 2px 4px rgba(0,0,0,0.05)" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#2448FF" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">CORE</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">DAILY BASE</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#2448FF"
+                  text-anchor="middle">FOUNDATION</text>
+              </svg>
+              <!-- Protein Bottle (lineup-2) -->
+              <svg class="bottle-svg plan-bottle-img lineup-2" viewBox="0 0 100 150">
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad-comp)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad-comp)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#FF8A00" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">PROTEIN</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">MUSCLE RECOVERY</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#FF8A00"
+                  text-anchor="middle">PERFORMANCE</text>
+              </svg>
+              <!-- Satiety Bottle (lineup-3) -->
+              <svg class="bottle-svg plan-bottle-img lineup-3" viewBox="0 0 100 150">
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad-comp)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad-comp)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#EC4899" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">SATIETY</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">CRAVING CTRL</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#EC4899"
+                  text-anchor="middle">WEIGHT</text>
+              </svg>
+              <!-- Glucose Bottle (lineup-4) -->
+              <svg class="bottle-svg plan-bottle-img lineup-4" viewBox="0 0 100 150">
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad-comp)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad-comp)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#06B6D4" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">GLUCOSE</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">SUGAR BALANCE</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#06B6D4"
+                  text-anchor="middle">METABOLISM</text>
+              </svg>
+              <!-- Balance Bottle (lineup-5) -->
+              <svg class="bottle-svg plan-bottle-img lineup-5" viewBox="0 0 100 150">
+                <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad-comp)" />
+                <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad-comp)"
+                  stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)"
+                  stroke-width="2" />
+                <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                <rect x="27" y="65" width="46" height="5" rx="1" fill="#7C3AED" />
+                <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E"
+                  text-anchor="middle">BALANCE</text>
+                <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280"
+                  text-anchor="middle">HORMONAL WELLNESS</text>
+                <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#7C3AED"
+                  text-anchor="middle">HORMONAL</text>
+              </svg>
+            </div>
+            <div class="card-info-content">
+              <div class="plan-header">
+                <span class="card-grid-badge" style="color: #ec4899; background: rgba(236, 72, 153, 0.08);">MAX
+                  OPTIMIZATION</span>
+                <h3 class="plan-name">Complete</h3>
+                <p class="plan-desc">Total health optimization.</p>
+              </div>
+              <div class="plan-price-label" id="card-price-complete">₹5,999<span>/mo</span></div>
+
+              <div class="plan-spec-divider"></div>
+              <div class="plan-specs">
+                <div class="spec-item"><span class="spec-lbl">Included Systems:</span> <span class="spec-val">All 5
+                    Essentials</span></div>
+                <div class="spec-item"><span class="spec-lbl">Health Impact:</span> <span class="spec-val">+36
+                    Score</span></div>
+                <div class="spec-item"><span class="spec-lbl">AI Guidance:</span> <span
+                    class="spec-val">Concierge</span></div>
+                <div class="spec-item"><span class="spec-lbl">Delivery:</span> <span class="spec-val">Flexible</span>
+                </div>
+              </div>
+              <button type="button" class="btn-select-plan">Select Complete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Step Guide -->
+        <div class="step-navigation-guide" id="guide-to-step-2" style="display: none;">
+          <button type="button" class="guide-btn" data-target="step-block-2">
+            <span>Customize Your Stack</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <polyline points="19 12 12 19 5 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vertical Connector Line -->
+      <div class="journey-connector-line"></div>
+
+      <!-- STEP 2: CUSTOMIZE YOUR HEALTH SYSTEM -->
+      <div class="journey-step-block" id="step-block-2">
+        <div class="step-header-center">
+          <div class="step-badge">STEP 02</div>
+          <h2 class="step-headline">Customize Your Health System</h2>
+          <p class="step-subheadline">Add or remove products to match your lifestyle and goals.</p>
+        </div>
+
+        <div class="builder-stepped-layout">
+          <!-- Left: Products List Grid -->
+          <div class="builder-left-grid">
+            <!-- Core -->
+            <div class="prod-selector-card" data-product-id="core" id="prod-card-core">
+              <div class="card-visual-fig">
+                <img src="images/Stakor-Core.png" alt="Core" class="prod-card-img">
+              </div>
+              <div class="card-info-content">
+                <span class="card-grid-badge core-badge">Daily Foundation</span>
+                <h3 class="prod-name">Core</h3>
+                <div class="prod-price">₹1,999<span>/mo</span></div>
+                <button type="button" class="btn-toggle-product">Add</button>
+              </div>
+            </div>
+            <!-- Protein -->
+            <div class="prod-selector-card" data-product-id="protein" id="prod-card-protein">
+              <div class="card-visual-fig">
+                <img src="images/Stackor-protein.png" alt="Protein" class="prod-card-img">
+              </div>
+              <div class="card-info-content">
+                <span class="card-grid-badge protein-badge">Muscle Recovery</span>
+                <h3 class="prod-name">Protein</h3>
+                <div class="prod-price">₹1,499<span>/mo</span></div>
+                <button type="button" class="btn-toggle-product">Add</button>
+              </div>
+            </div>
+            <!-- Satiety -->
+            <div class="prod-selector-card" data-product-id="satiety" id="prod-card-satiety">
+              <div class="card-visual-fig">
+                <img src="images/Stakor-Sateity.png" alt="Satiety" class="prod-card-img">
+              </div>
+              <div class="card-info-content">
+                <span class="card-grid-badge satiety-badge">Craving Control</span>
+                <h3 class="prod-name">Satiety</h3>
+                <div class="prod-price">₹1,299<span>/mo</span></div>
+                <button type="button" class="btn-toggle-product">Add</button>
+              </div>
+            </div>
+            <!-- Glucose -->
+            <div class="prod-selector-card" data-product-id="glucose" id="prod-card-glucose">
+              <div class="card-visual-fig">
+                <img src="images/Stakor-Glucose.png" alt="Glucose" class="prod-card-img">
+              </div>
+              <div class="card-info-content">
+                <span class="card-grid-badge glucose-badge">Metabolic Health</span>
+                <h3 class="prod-name">Glucose</h3>
+                <div class="prod-price">₹999<span>/mo</span></div>
+                <button type="button" class="btn-toggle-product">Add</button>
+              </div>
+            </div>
+            <!-- Balance -->
+            <div class="prod-selector-card" data-product-id="balance" id="prod-card-balance">
+              <div class="card-visual-fig">
+                <img src="images/Stackor-Balance.png" alt="Balance" class="prod-card-img">
+              </div>
+              <div class="card-info-content">
+                <span class="card-grid-badge balance-badge">Stress & Sleep</span>
+                <h3 class="prod-name">Balance</h3>
+                <div class="prod-price">₹899<span>/mo</span></div>
+                <button type="button" class="btn-toggle-product">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Real-time Health Engine Summary Card -->
+          <div class="builder-right-engine">
+            <div class="engine-summary-card">
+              <div class="engine-glow"></div>
+              <h3 class="engine-title">Real-Time Health Engine</h3>
+
+              <div class="engine-stats">
+                <div class="engine-stat-row">
+                  <span class="engine-label">Products Selected</span>
+                  <span class="engine-value" id="engineProductsCount">3</span>
+                </div>
+                <div class="engine-stat-row">
+                  <span class="engine-label">Stack Strength</span>
+                  <span class="engine-value" id="engineStackStrength">Strong</span>
+                </div>
+                <div class="engine-stat-row">
+                  <span class="engine-label">Health Score Impact</span>
+                  <span class="engine-value" id="engineHealthImpact">+18</span>
+                </div>
+                <div class="engine-stat-row">
+                  <span class="engine-label">AI Recommendation Match</span>
+                  <span class="engine-value highlight" id="engineAiMatch">92%</span>
+                </div>
+              </div>
+
+              <!-- Animated Connection Path -->
+              <div class="visual-connection-flow">
+                <div class="flow-step-node" id="visualPlanNode">Performance Plan</div>
+                <div class="flow-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </div>
+                <div class="flow-list-group" id="visualProductsList">
+                  <!-- Populated dynamically -->
+                </div>
+                <div class="flow-add-ons" id="visualAddonsList">
+                  <span class="addon-title">Optional Add-ons:</span>
+                  <div class="addon-pills-container" id="visualAddonsPills">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Step Guide -->
+        <div class="step-navigation-guide" id="guide-to-step-3" style="display: none;">
+          <button type="button" class="guide-btn" data-target="step-block-3">
+            <span>Select Membership Cycle</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <polyline points="19 12 12 19 5 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vertical Connector Line -->
+      <div class="journey-connector-line"></div>
+
+      <!-- STEP 3: CHOOSE YOUR MEMBERSHIP CYCLE -->
+      <div class="journey-step-block" id="step-block-3">
+        <div class="step-header-center">
+          <div class="step-badge">STEP 03</div>
+          <h2 class="step-headline">Choose Your Membership Cycle</h2>
+          <p class="step-subheadline">Optimize savings and delivery frequency.</p>
+        </div>
+
+        <div class="duration-cards-grid">
+          <!-- 15 Days -->
+          <div class="duration-card" data-cycle="15days" data-delivery="Every 15 Days" data-impact="+5">
+            <span class="floating-badge empty">Flexible</span>
+            <div class="cycle-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <h3 class="cycle-card-title">15 Days</h3>
+            <p class="cycle-card-delivery">Every 15 Days</p>
+            <span class="cycle-card-status">Flexible</span>
+            <button type="button" class="btn-select-cycle">Select Plan</button>
+          </div>
+
+          <!-- Monthly -->
+          <div class="duration-card active" data-cycle="monthly" data-delivery="Every 30 Days" data-impact="+12">
+            <span class="floating-badge popular">Most Popular</span>
+            <div class="cycle-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </div>
+            <h3 class="cycle-card-title">Monthly</h3>
+            <p class="cycle-card-delivery">Every 30 Days</p>
+            <span class="cycle-card-status">Popular</span>
+            <button type="button" class="btn-select-cycle">Select Plan</button>
+          </div>
+
+          <!-- 3 Months -->
+          <div class="duration-card" data-cycle="3months" data-delivery="Every 3 Months" data-impact="+18">
+            <span class="floating-badge discount">Save 10%</span>
+            <div class="cycle-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </div>
+            <h3 class="cycle-card-title">3 Months</h3>
+            <p class="cycle-card-delivery">Every 3 Months</p>
+            <span class="cycle-card-status">10% Off</span>
+            <button type="button" class="btn-select-cycle">Select Plan</button>
+          </div>
+
+          <!-- 6 Months -->
+          <div class="duration-card" data-cycle="6months" data-delivery="Every 6 Months" data-impact="+24">
+            <span class="floating-badge discount">Save 15%</span>
+            <div class="cycle-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </div>
+            <h3 class="cycle-card-title">6 Months</h3>
+            <p class="cycle-card-delivery">Every 6 Months</p>
+            <span class="cycle-card-status">15% Off</span>
+            <button type="button" class="btn-select-cycle">Select Plan</button>
+          </div>
+
+          <!-- Annual -->
+          <div class="duration-card" data-cycle="annual" data-delivery="Every Year" data-impact="+36">
+            <span class="floating-badge discountHighlight">Save 25%</span>
+            <div class="cycle-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </div>
+            <h3 class="cycle-card-title">Annual</h3>
+            <p class="cycle-card-delivery">Every Year</p>
+            <span class="cycle-card-status">25% Off</span>
+            <button type="button" class="btn-select-cycle">Select Plan</button>
+          </div>
+        </div>
+
+        <!-- Live timeline summary details grid -->
+        <div class="timeline-live-summary">
+          <div class="live-summary-col">
+            <span class="col-lbl">Savings</span>
+            <span class="col-val" id="cycleLiveSavings">0%</span>
+          </div>
+          <div class="live-summary-col">
+            <span class="col-lbl">Health Score Projection</span>
+            <span class="col-val highlight" id="cycleLiveHealth">+12</span>
+          </div>
+          <div class="live-summary-col">
+            <span class="col-lbl">Deliveries</span>
+            <span class="col-val" id="cycleLiveDeliveries">12</span>
+          </div>
+          <div class="live-summary-col">
+            <span class="col-lbl">Priority Access</span>
+            <span class="col-val" id="cycleLivePriority">Included</span>
+          </div>
+        </div>
+
+        <!-- Next Step Guide -->
+        <div class="step-navigation-guide" id="guide-to-step-4" style="display: none;">
+          <button type="button" class="guide-btn" data-target="step-block-4">
+            <span>Review Health Dashboard</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <polyline points="19 12 12 19 5 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vertical Connector Line -->
+      <div class="journey-connector-line"></div>
+
+      <!-- STEP 4: YOUR PERSONALIZED HEALTH SYSTEM -->
+      <div class="journey-step-block" id="step-block-4">
+        <div class="step-header-center">
+          <div class="step-badge">STEP 04</div>
+          <h2 class="step-headline">Your Personalized Health System</h2>
+          <p class="step-subheadline">Review the details and metrics of your configurations.</p>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Left Visual Meter & Category Bars -->
+          <div class="dashboard-visuals-panel">
+            <div class="circular-meter-wrapper">
+              <svg class="health-circular-meter" viewBox="0 0 120 120">
+                <circle class="meter-track" cx="60" cy="60" r="50" stroke-width="8"></circle>
+                <circle class="meter-fill" id="meterFillCircle" cx="60" cy="60" r="50" stroke-width="8"
+                  stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+              </svg>
+              <div class="meter-text-center">
+                <span class="meter-num" id="dashHealthScore">92</span>
+                <span class="meter-lbl">Health Score</span>
+              </div>
+            </div>
+
+            <div class="benefit-bars-list">
+              <div class="benefit-bar-row">
+                <div class="bar-top">
+                  <span class="bar-lbl">Sleep</span>
+                  <span class="bar-pct" id="barSleepPct">+12%</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" id="barSleepFill" style="width: 12%;"></div>
+                </div>
+              </div>
+              <div class="benefit-bar-row">
+                <div class="bar-top">
+                  <span class="bar-lbl">Energy</span>
+                  <span class="bar-pct" id="barEnergyPct">+18%</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" id="barEnergyFill" style="width: 18%;"></div>
+                </div>
+              </div>
+              <div class="benefit-bar-row">
+                <div class="bar-top">
+                  <span class="bar-lbl">Recovery</span>
+                  <span class="bar-pct" id="barRecoveryPct">+15%</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" id="barRecoveryFill" style="width: 15%;"></div>
+                </div>
+              </div>
+              <div class="benefit-bar-row">
+                <div class="bar-top">
+                  <span class="bar-lbl">Metabolism</span>
+                  <span class="bar-pct" id="barMetabolismPct">+10%</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" id="barMetabolismFill" style="width: 10%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Stats Dashboard Details Grid -->
+          <div class="dashboard-details-panel">
+            <div class="dash-details-card">
+              <div class="dash-row">
+                <span class="dash-lbl">Selected Plan</span>
+                <span class="dash-val" id="dashPlan">Performance</span>
+              </div>
+              <div class="dash-row">
+                <span class="dash-lbl">Products</span>
+                <span class="dash-val" id="dashProducts">Core, Protein, Satiety</span>
+              </div>
+              <div class="dash-row">
+                <span class="dash-lbl">Cycle</span>
+                <span class="dash-val" id="dashCycle">3 Months</span>
+              </div>
+              <div class="dash-row">
+                <span class="dash-lbl">Delivery</span>
+                <span class="dash-val" id="dashDelivery">Every 30 Days</span>
+              </div>
+              <div class="dash-row">
+                <span class="dash-lbl">Savings</span>
+                <span class="dash-val highlight" id="dashSavings">₹2,400</span>
+              </div>
+              <div class="dash-row border-top">
+                <span class="dash-lbl">Projected Health Score</span>
+                <span class="dash-val" id="dashProjectedScore">92</span>
+              </div>
+              <div class="dash-row">
+                <span class="dash-lbl">AI Confidence</span>
+                <span class="dash-val highlight" id="dashAiConfidence">95%</span>
+              </div>
+              <div class="dash-row">
+                <span class="dash-lbl">Stack Effectiveness</span>
+                <span class="dash-val" id="dashEffectiveness">Excellent</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Step Guide -->
+        <div class="step-navigation-guide" id="guide-to-step-5" style="display: none;">
+          <button type="button" class="guide-btn" data-target="step-block-5">
+            <span>Activate Membership</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <polyline points="19 12 12 19 5 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vertical Connector Line -->
+      <div class="journey-connector-line"></div>
+
+      <!-- STEP 5: FINAL CTA -->
+      <div class="journey-step-block" id="step-block-5">
+        <div class="step-header-center">
+          <div class="step-badge">STEP 05</div>
+        </div>
+
+        <div class="final-cta-card">
+          <div class="final-cta-card-glow"></div>
+          <h2 class="final-cta-title">Your Personalized STAKOR Membership Is Ready</h2>
+
+          <div class="final-summary-meta">
+            <div class="meta-block">
+              <span class="meta-title" id="finalPlan">Performance Plan</span>
+              <span class="meta-desc" id="finalProductsCount">3 Products</span>
+            </div>
+            <div class="meta-vertical-divider"></div>
+            <div class="meta-block">
+              <span class="meta-title" id="finalCycle">3 Month Cycle</span>
+              <span class="meta-desc">Delivery schedule configured</span>
+            </div>
+            <div class="meta-vertical-divider"></div>
+            <div class="meta-block">
+              <span class="meta-title" style="color: var(--stakor-blue);" id="finalScore">92 Score</span>
+              <span class="meta-desc">Projected Health Impact</span>
+            </div>
+            <div class="meta-vertical-divider"></div>
+            <div class="meta-block">
+              <span class="meta-title" style="color: #10B981;" id="finalSavings">You Save: ₹1,998</span>
+              <span class="meta-desc">Active dynamic savings</span>
+            </div>
+          </div>
+
+          <div class="final-cta-pricing">
+            <span class="pricing-label">Monthly Rate</span>
+            <span class="pricing-amount" id="finalPriceAmount">₹3,999/mo</span>
+          </div>
+
+          <div class="final-cta-buttons">
+            <button type="button" class="btn-primary-blue" id="finalActivateBtn">
+              <span>Activate Membership</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+            <a href="#step-block-4" class="btn-secondary-breakdown">View Full Breakdown</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- =========================================================
+         5. FAQ SECTION
+         ========================================================= -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <span class="section-eyebrow">FREQUENTLY ASKED QUESTIONS</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <div class="faq-grid">
+        <!-- Can I pause my subscription? -->
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I pause my subscription?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes. You can pause, skip, or modify your next shipment directly in the STAKOR system control panel anytime
+              before your upcoming preparation date.
+            </div>
+          </div>
+        </div>
+
+        <!-- Can I cancel anytime? -->
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I cancel anytime?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Absolutely. There are no lock-ins, contract terms, or cancellation fees. Toggling your plan status to
+              inactive is processed instantly online.
+            </div>
+          </div>
+        </div>
+
+        <!-- Can I swap products? -->
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I swap products?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes. You are in complete control of your stack composition. Add, remove, or swap any product from your
+              member panel before your monthly box ships.
+            </div>
+          </div>
+        </div>
+
+        <!-- How often is delivery? -->
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How often is delivery?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Personalized boxes ship automatically every 30 days. We notify you via email and dashboard alerts 3 days
+              prior to shipping so you can inspect your configuration.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+         6. FINAL BANNER CTA SECTION
+         ========================================================= -->
+  <section class="banner-cta-section" id="banner-cta">
+    <div class="container">
+      <div class="banner-cta-wrapper">
+        <!-- Left Content -->
+        <div class="banner-cta-left">
+          <h2 class="banner-cta-heading">Start Your Health Journey</h2>
+          <p class="banner-cta-subheading">Smarter products. Delivered automatically. Better health. Every day.</p>
+          <a href="#step-block-1" class="banner-cta-btn">
+            <span>Start Membership</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              style="width: 16px; height: 16px; margin-left: 8px;">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Right Bottles Lineup -->
+        <div class="banner-cta-right">
+          <div class="banner-floor-glow"></div>
+          <div class="banner-bottles-lineup">
+            <img src="/images/Stakor-Sateity.png" alt="Satiety" class="banner-bottle satiety">
+            <img src="/images/Stackor-protein.png" alt="Protein" class="banner-bottle protein">
+            <img src="/images/Stakor-Core.png" alt="Core" class="banner-bottle core">
+            <img src="/images/Stakor-Glucose.png" alt="Glucose" class="banner-bottle glucose">
+            <img src="/images/Stackor-Balance.png" alt="Balance" class="banner-bottle balance">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+  <footer class="futuristic-footer">
+    <div class="footer-container">
+
+      <!-- Section 1 (CTA Card) has been removed as per request -->
+
+      <!-- SECTION 2: COMPACT FOOTER NAVIGATION -->
+      <div class="footer-nav-grid">
+        <div class="footer-nav-col footer-nav-logo-col">
+          <div class="s10-bottom-logo" style="color: #08142e; font-size: 24px; margin-bottom: 4px;">STAK<span
+              style="color: #2563ff;">OR</span></div>
+          <div style="font-size: 13px; color: #64748b; font-weight: 500;">Health Intelligence Platform</div>
+          <div class="footer-trust-indicators">
+            <div class="footer-trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Science Backed</span>
+            </div>
+            <div class="footer-trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Privacy First</span>
+            </div>
+            <div class="footer-trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>AI Personalized</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-nav-col">
+          <span class="footer-nav-col-title">Health Systems</span>
+          <ul class="footer-nav-links">
+            <li><a href="/subscription.html?products=core">Core</a></li>
+            <li><a href="/subscription.html?products=protein">Protein</a></li>
+            <li><a href="/subscription.html?products=satiety">Satiety</a></li>
+            <li><a href="/subscription.html?products=glucose">Glucose</a></li>
+            <li><a href="/subscription.html?products=balance">Balance</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-col">
+          <span class="footer-nav-col-title">Tools</span>
+          <ul class="footer-nav-links">
+            <li><a href="/assessment.html">Assessment</a></li>
+            <li><a href="/Universe.Html#health-radar">Health Score</a></li>
+            <li><a href="/Universe.Html#stack-builder">Stack Builder</a></li>
+            <li><a href="/Universe.Html#insights">AI Concierge</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-col">
+          <span class="footer-nav-col-title">Company</span>
+          <ul class="footer-nav-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Research</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-col">
+          <span class="footer-nav-col-title">Support</span>
+          <ul class="footer-nav-links">
+            <li><a href="/subscription.html#faq">FAQ</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="/subscription.html">Subscription</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SECTION 3: TRUST STRIP -->
+      <div class="footer-trust-strip">
+        <div class="footer-trust-strip-item">
+          <div class="footer-trust-strip-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M10 2v8L4.36 20.64A1 1 0 0 0 5.25 22h13.5a1 1 0 0 0 .89-1.36L14 10V2z"></path>
+              <path d="M8.5 2h7"></path>
+              <path d="M6 18h12"></path>
+            </svg>
+          </div>
+          <span class="footer-trust-strip-label">Science Backed</span>
+        </div>
+        <div class="footer-trust-strip-item">
+          <div class="footer-trust-strip-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <span class="footer-trust-strip-label">Privacy First</span>
+        </div>
+        <div class="footer-trust-strip-item">
+          <div class="footer-trust-strip-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-.877a.5.5 0 0 1 0-.972l6.135-.877A2 2 0 0 0 9.937 9.938l.877-6.135a.5.5 0 0 1 .972 0l.877 6.135a2 2 0 0 0 1.438 1.438l6.135.877a.5.5 0 0 1 0 .972l-6.135.877a2 2 0 0 0-1.438 1.438l-.877 6.135a.5.5 0 0 1-.972 0l-.877-6.135z">
+              </path>
+              <path d="M20 3a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-1z"></path>
+              <path d="M4 19a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H4z"></path>
+            </svg>
+          </div>
+          <span class="footer-trust-strip-label">AI Personalized</span>
+        </div>
+        <div class="footer-trust-strip-item">
+          <div class="footer-trust-strip-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+              <path d="M21 3v5h-5"></path>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+              <path d="M3 21v-5h5"></path>
+            </svg>
+          </div>
+          <span class="footer-trust-strip-label">Flexible Subscription</span>
+        </div>
+      </div>
+
+      <!-- SECTION 4: LEGAL BAR -->
+      <div class="footer-legal-bar">
+        <div class="footer-legal-left">
+          © 2025 STAKOR. All rights reserved.
+        </div>
+        <div class="footer-legal-center">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+        <div class="footer-legal-right">
+          <span class="footer-legal-tagline">Optimize. Evolve. Thrive.</span>
+          <div class="footer-socials">
+            <a href="#" class="footer-social-link" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" title="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" title="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                  d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
+                </path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" title="X">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768 M20 4l-6.768 6.768"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Success Modal -->
+  <div class="success-modal-overlay" id="successModal">
+    <div class="success-modal-card">
+      <!-- Close button (always visible in step 1, hidden or disabled during load/success) -->
+      <button class="success-modal-close" id="closeModalBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- STEP 1: PAYMENT GATEWAY FORM -->
+      <div class="modal-step" id="stepPayment">
+        <h3 class="success-modal-title">Secure Checkout</h3>
+        <p class="success-modal-subtitle" style="margin-bottom: 20px;">Complete your membership payment setup.</p>
+
+        <!-- Quick Summary Row -->
+        <div class="checkout-summary-mini">
+          <div class="summary-mini-item">
+            <span class="mini-label">Plan</span>
+            <span class="mini-value" id="payPlan">Performance Plan</span>
+          </div>
+          <div class="summary-mini-item">
+            <span class="mini-label">Cycle</span>
+            <span class="mini-value" id="payCycle">Monthly</span>
+          </div>
+          <div class="summary-mini-item">
+            <span class="mini-label">Total Rate</span>
+            <span class="mini-value highlight" id="payPrice">₹3,999/mo</span>
+          </div>
+        </div>
+
+        <form class="payment-form" id="checkoutForm" onsubmit="return false;">
+          <div class="payment-input-group">
+            <label class="payment-input-label">Cardholder Name</label>
+            <input type="text" class="payment-input" id="cardName" placeholder="e.g. John Doe" required>
+          </div>
+
+          <div class="payment-input-group">
+            <label class="payment-input-label">Card Number</label>
+            <div style="position: relative; width: 100%;">
+              <input type="text" class="payment-input" id="cardNumber" placeholder="4111 2222 3333 4444" maxlength="19"
+                required style="padding-right: 48px;">
+              <svg class="card-type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: #94A3B8; pointer-events: none;">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                <line x1="1" y1="10" x2="23" y2="10"></line>
+              </svg>
+            </div>
+          </div>
+
+          <div class="payment-row-split">
+            <div class="payment-input-group">
+              <label class="payment-input-label">Expiry Date</label>
+              <input type="text" class="payment-input" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+            </div>
+            <div class="payment-input-group">
+              <label class="payment-input-label">CVV</label>
+              <input type="password" class="payment-input" id="cardCvv" placeholder="•••" maxlength="3" required>
+            </div>
+          </div>
+
+          <div class="payment-error-msg" id="paymentErrorMsg"
+            style="display: none; color: #EF4444; font-size: 13px; font-weight: 600; margin-top: 4px; text-align: center;">
+            Please fill out all payment details.
+          </div>
+
+          <button type="button" class="btn-primary-blue full-width" id="submitPaymentBtn"
+            style="margin-top: 12px; gap: 8px;">
+            <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span id="payButtonText">Authorize & Pay ₹3,999/mo</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- STEP 2: PROCESSING TRANSACTION -->
+      <div class="modal-step" id="stepProcessing" style="display: none;">
+        <div class="spinner-wrapper">
+          <div class="loader-spinner"></div>
+        </div>
+        <h3 class="success-modal-title">Authorizing Payment</h3>
+        <p class="success-modal-subtitle">Connecting to secure payment gateway. Please wait...</p>
+      </div>
+
+      <!-- STEP 3: SUCCESS ACTIVATION RECEIPT -->
+      <div class="modal-step" id="stepSuccess" style="display: none;">
+        <div class="success-checkmark-wrapper">
+          <div class="success-checkmark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </div>
+        <h3 class="success-modal-title">Subscription Activated!</h3>
+        <p class="success-modal-subtitle">Your STAKOR membership has been configured successfully.</p>
+
+        <div class="success-receipt">
+          <div class="receipt-header">Order Summary</div>
+          <div class="receipt-table">
+            <div class="receipt-row">
+              <span class="receipt-label">Membership Plan</span>
+              <span class="receipt-value" id="receiptPlan">Performance Plan</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">Billing Cycle</span>
+              <span class="receipt-value" id="receiptCycle">Monthly Cycle</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">Active Essentials</span>
+              <span class="receipt-value" id="receiptProducts">3 Active Essentials</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">Delivery Schedule</span>
+              <span class="receipt-value" id="receiptDelivery">Every 30 Days</span>
+            </div>
+            <div class="receipt-divider"></div>
+            <div class="receipt-row total-row">
+              <span class="receipt-label">Monthly Rate</span>
+              <span class="receipt-value" id="receiptTotal">₹3,999/mo</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary-blue full-width" id="goToDashboardBtn">
+          <span>Go to Health Universe</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breakdown Modal -->
+  <div class="success-modal-overlay" id="breakdownModal">
+    <div class="success-modal-card" style="max-width: 680px; padding: 30px 40px;">
+      <!-- Close button -->
+      <button class="success-modal-close" id="closeBreakdownModalBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-step" style="width: 100%;">
+        <h3 class="success-modal-title" style="font-size: 22px; margin-bottom: 4px;">Personalized Stack Breakdown</h3>
+        <p class="success-modal-subtitle" style="margin-bottom: 24px;">Review your wellness system configuration and
+          projections.</p>
+
+        <!-- Side-by-Side Grid -->
+        <div class="breakdown-grid">
+          <!-- Column 1: Specs -->
+          <div class="success-receipt breakdown-receipt" style="text-align: left;">
+            <div class="receipt-header" style="margin-bottom: 12px;">Health System Specs</div>
+            <div class="receipt-table" style="gap: 8px;">
+              <div class="receipt-row">
+                <span class="receipt-label">Selected Plan</span>
+                <span class="receipt-value" id="breakdownPlan">Performance Plan</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Active Products</span>
+                <span class="receipt-value" id="breakdownProducts">Core, Protein, Satiety</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Billing Cycle</span>
+                <span class="receipt-value" id="breakdownCycle">3 Months</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Delivery Schedule</span>
+                <span class="receipt-value" id="breakdownDelivery">Every 3 Months</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Health Score Impact</span>
+                <span class="receipt-value highlight" style="color: var(--stakor-blue);" id="breakdownScore">92
+                  Score</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Biomarkers -->
+          <div class="success-receipt breakdown-receipt" style="text-align: left;">
+            <div class="receipt-header" style="margin-bottom: 12px;">Biomarker Projections</div>
+            <div class="receipt-table" style="gap: 8px;">
+              <div class="receipt-row">
+                <span class="receipt-label">Sleep Improvement</span>
+                <span class="receipt-value" id="breakdownSleep">+12%</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Energy Level</span>
+                <span class="receipt-value" id="breakdownEnergy">+18%</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Recovery Rate</span>
+                <span class="receipt-value" id="breakdownRecovery">+15%</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Metabolism Speed</span>
+                <span class="receipt-value" id="breakdownMetabolism">+10%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom: Financial -->
+        <div class="success-receipt breakdown-receipt" style="width: 100%; text-align: left; margin-bottom: 20px;">
+          <div class="receipt-header" style="margin-bottom: 12px;">Financial Summary</div>
+          <div class="receipt-table" style="gap: 8px;">
+            <div class="receipt-row"
+              style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%;">
+              <div style="display: flex; flex-direction: column;">
+                <span class="receipt-label" style="font-size: 11px;">Base Subtotal</span>
+                <span class="receipt-value" id="breakdownSubtotal"
+                  style="font-size: 13.5px; margin-top: 2px;">₹4,797/mo</span>
+              </div>
+              <div style="display: flex; flex-direction: column;">
+                <span class="receipt-label" style="font-size: 11px;">Bundle Discount</span>
+                <span class="receipt-value" style="color: #10B981; font-size: 13.5px; margin-top: 2px;"
+                  id="breakdownBundleDiscount">-₹798/mo</span>
+              </div>
+              <div style="display: flex; flex-direction: column;">
+                <span class="receipt-label" style="font-size: 11px;">Cycle Discount</span>
+                <span class="receipt-value" style="color: #10B981; font-size: 13.5px; margin-top: 2px;"
+                  id="breakdownCycleDiscount">-₹400/mo</span>
+              </div>
+              <div style="display: flex; flex-direction: column;">
+                <span class="receipt-label" style="font-size: 11px;">Total Savings</span>
+                <span class="receipt-value"
+                  style="color: #10B981; font-size: 13.5px; margin-top: 2px; font-weight: 700;"
+                  id="breakdownTotalSavings">₹3,594</span>
+              </div>
+            </div>
+            <div class="receipt-divider" style="margin: 8px 0 4px;"></div>
+            <div class="receipt-row total-row" style="font-size: 15px;">
+              <span class="receipt-label">Net Monthly Rate</span>
+              <span class="receipt-value" id="breakdownTotal" style="font-size: 18px;">₹3,599/mo</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary-blue full-width" id="closeBreakdownModalBtn2">
+          <span>Close Breakdown</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/subscription.js"></script>
+  <script>
+    // Mobile Navigation & Scroll Init
+    const initNavbar = () => {
+      const menuBtn = document.querySelector('.nav-menu-btn');
+      const nav = document.querySelector('.header-nav');
+      if (menuBtn && nav) {
+        menuBtn.addEventListener('click', () => {
+          nav.classList.toggle('nav-open');
+          const isOpen = nav.classList.contains('nav-open');
+          if (isOpen) {
+            menuBtn.innerHTML = `
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              `;
+          } else {
+            menuBtn.innerHTML = `
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+              `;
+          }
+        });
+
+        // Hide/Show Navbar on Scroll
+        let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        window.addEventListener('scroll', () => {
+          const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+          if (nav.classList.contains('nav-open')) return;
+          
+          if (currentScrollY <= 100) {
+            nav.classList.remove('scroll-hide');
+            return;
+          }
+          
+          if (currentScrollY > lastScrollY && !nav.classList.contains('scroll-hide')) {
+            nav.classList.add('scroll-hide');
+          } else if (currentScrollY < lastScrollY && nav.classList.contains('scroll-hide')) {
+            nav.classList.remove('scroll-hide');
+          }
+          lastScrollY = currentScrollY;
+        }, { passive: true });
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initNavbar);
+    } else {
+      initNavbar();
+    }
+
+    // Initialize 3D Mouse Parallax Tilt for all glassmorphic cards
+    function init3DTilt(card) {
+      if (!card) return;
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Normalize cursor position [-0.5, 0.5]
+        const normX = (x / rect.width) - 0.5;
+        const normY = (y / rect.height) - 0.5;
+
+        // Tilt limit (up to 8 degrees)
+        const rotateX = -normY * 8;
+        const rotateY = normX * 8;
+
+        gsap.to(card, {
+          rotationX: rotateX,
+          rotationY: rotateY,
+          transformPerspective: 1000,
+          ease: 'power2.out',
+          duration: 0.3
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotationX: 0,
+          rotationY: 0,
+          ease: 'power2.out',
+          duration: 0.5
+        });
+      });
+    }
+
+      // Attach 3D tilt interaction to current & dynamically added cards
+      const tiltSelectors = [
+        '.journey-plan-card',
+        '.prod-selector-card',
+        '.engine-summary-card',
+        '.duration-card',
+        '.dashboard-visuals-panel',
+        '.dash-details-card',
+        '.final-cta-card'
+      ];
+      
+      const applyTiltToAll = () => {
+        document.querySelectorAll(tiltSelectors.join(',')).forEach(card => {
+          if (!card.dataset.tiltInitialized) {
+            init3DTilt(card);
+            card.dataset.tiltInitialized = 'true';
+          }
+        });
+      };
+      applyTiltToAll();
+
+      // Hook into DOM updates to apply tilt to any new elements
+      const observer = new MutationObserver(() => {
+        applyTiltToAll();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // GSAP ScrollTrigger stagger entry reveals for steps 1-5
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Step 1 reveals
+        gsap.fromTo('.journey-plan-card',
+          { opacity: 0, y: 55, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '#step-block-1',
+              start: 'top 80%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+
+        // Step 2 reveals - Ultra premium 3D flying reveal staggering from depth
+        const step2Tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#step-block-2',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+        
+        const step2Cards = gsap.utils.toArray('.prod-selector-card');
+        step2Cards.forEach((card, index) => {
+          const isEven = index % 2 === 0;
+          step2Tl.fromTo(card,
+            {
+              opacity: 0,
+              scale: 0.1,
+              rotationX: 35,
+              rotationY: isEven ? 45 : -45,
+              rotationZ: isEven ? -10 : 10,
+              z: -500,
+              x: isEven ? -200 : 200,
+              y: 120,
+              transformOrigin: "center center"
+            },
+            {
+              opacity: 1,
+              scale: 1,
+              rotationX: 0,
+              rotationY: 0,
+              rotationZ: 0,
+              z: 0,
+              x: 0,
+              y: 0,
+              duration: 1.4,
+              ease: 'power4.out'
+            },
+            index === 0 ? 0 : `-=1.2`
+          );
+        });
+
+        step2Tl.fromTo('.engine-summary-card',
+          { 
+            opacity: 0, 
+            scale: 0.1, 
+            z: -500, 
+            rotationY: -45, 
+            x: 200,
+            y: 120
+          },
+          { 
+            opacity: 1, 
+            scale: 1, 
+            z: 0, 
+            rotationY: 0, 
+            x: 0, 
+            y: 0, 
+            duration: 1.4, 
+            ease: 'power4.out' 
+          },
+          '-=1.2'
+        );
+
+        // Step 3 reveals - High-fidelity 3D fan-out from depth staggeredly
+        const step3Tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#step-block-3',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+        
+        const step3Cards = gsap.utils.toArray('.duration-card');
+        step3Cards.forEach((card, index) => {
+          const offsetAngle = (index - 2) * 15; // Fan out angle based on card index
+          step3Tl.fromTo(card,
+            {
+              opacity: 0,
+              scale: 0.05,
+              z: -600,
+              x: offsetAngle * 25, // Lateral fan direction
+              y: 150, // Higher lift
+              rotationX: 45, // Tilted forward
+              rotationY: offsetAngle,
+              rotationZ: offsetAngle * -0.4,
+              transformOrigin: "center bottom"
+            },
+            {
+              opacity: 1,
+              scale: 1,
+              z: 0,
+              x: 0,
+              y: 0,
+              rotationX: 0,
+              rotationY: 0,
+              rotationZ: 0,
+              duration: 1.5,
+              ease: 'power4.out'
+            },
+            index === 0 ? 0 : `-=1.35`
+          );
+        });
+
+        // Step 4 reveals
+        const step4Tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#step-block-4',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        });
+        step4Tl.fromTo('.dashboard-visuals-panel',
+          { opacity: 0, x: -45, scale: 0.97 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: 'power2.out' }
+        );
+        step4Tl.fromTo('.dash-details-card',
+          { opacity: 0, x: 45, scale: 0.97 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: 'power2.out' },
+          '-=0.6'
+        );
+
+        // Step 5 reveal
+        gsap.fromTo('.final-cta-card',
+          { opacity: 0, y: 55, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.0,
+            ease: 'back.out(1.15)',
+            scrollTrigger: {
+              trigger: '#step-block-5',
+              start: 'top 85%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      }
+    });
+  </script>
+</body>
+
+</html>

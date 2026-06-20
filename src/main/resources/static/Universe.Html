@@ -1,0 +1,2378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAKOR | Your Health Universe</title>
+    <!-- Google Fonts: Inter, Montserrat, Lexend Giga, Tektur, Outfit, Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Lexend+Giga:wght@400;500;600;700;800;900&family=Tektur:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Spline 3D Viewer module -->
+    <link rel="preload" href="https://prod.spline.design/jrwjM0DYSQkbIioB/scene.splinecode" as="fetch" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.97/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .intro-title,
+        .section-title,
+        .product-title,
+        .panel-title,
+        .how-title,
+        #timeline-stage-title,
+        .brand-name,
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Lexend Giga', sans-serif !important;
+            font-weight: 700 !important;
+        }
+        .intro-title {
+            font-size: clamp(38px, 3.6vw, 56px) !important;
+            line-height: 1.15 !important;
+            letter-spacing: -1.5px !important;
+        }
+
+    /* Header Navbar styles - Apple Liquid Glass Effect */
+    nav.header-nav, nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 48px !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      /* Dual reflection layered background for liquid glass effect */
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.25) 100%) !important;
+      backdrop-filter: blur(25px) saturate(190%) !important;
+      -webkit-backdrop-filter: blur(25px) saturate(190%) !important;
+      /* Crisp bottom border reflection - bottom only for full width */
+      border: none !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+      border-radius: 0 !important;
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.35) inset,
+        0 8px 30px rgba(8, 20, 46, 0.03);
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    nav.header-nav:hover, nav:hover {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.35) 100%) !important;
+      border-bottom-color: rgba(255, 255, 255, 0.6) !important;
+      box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.4) inset,
+        0 12px 35px rgba(37, 99, 255, 0.05);
+      transform: none !important;
+    }
+    nav.header-nav.scroll-hide, nav.scroll-hide {
+      transform: translateY(-100%) !important;
+    }
+    /* Slide app container up to fill viewport and expand height when navbar hides */
+    .app-container {
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), height 0.45s cubic-bezier(0.16, 1, 0.3, 1), grid-template-columns 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .sidebar-left,
+    .sidebar-right,
+    .main-content {
+      transition: height 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s, padding 0.45s, border-width 0.45s !important;
+    }
+
+    body.navbar-hidden .app-container {
+      transform: translateY(-80px) !important;
+      height: calc(100vh + 80px) !important;
+    }
+    body.navbar-hidden .sidebar-left,
+    body.navbar-hidden .sidebar-right,
+    body.navbar-hidden .main-content {
+      height: calc(100vh + 80px) !important;
+    }
+
+    @media (max-width: 1024px) {
+      body.navbar-hidden .app-container {
+        transform: translateY(-76px) !important;
+        height: calc(100vh + 76px) !important;
+      }
+      body.navbar-hidden .sidebar-left,
+      body.navbar-hidden .sidebar-right,
+      body.navbar-hidden .main-content {
+        height: calc(100vh + 76px) !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body.navbar-hidden .app-container {
+        transform: translateY(-64px) !important;
+        height: calc(100vh + 64px) !important;
+      }
+      body.navbar-hidden .sidebar-left,
+      body.navbar-hidden .sidebar-right,
+      body.navbar-hidden .main-content {
+        height: calc(100vh + 64px) !important;
+      }
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-img {
+      height: 160px !important;
+      margin: -43px 0 !important;
+      width: auto;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .logo-img:hover {
+      transform: scale(1.05);
+    }
+    .logo-text {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: #0b1b53;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+    .nav-links li {
+      position: relative;
+      z-index: 1;
+    }
+    .nav-links a {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 14px;
+      font-weight: 500;
+      color: #4b5b80;
+      text-decoration: none;
+      transition: color .25s;
+      padding: 8px 16px;
+      display: inline-block;
+    }
+    .nav-links a:hover {
+      color: #0b1b53;
+    }
+    .nav-active>a {
+      color: #0b1b53;
+      font-weight: 600;
+    }
+    .nav-active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      background: #2563ff;
+      border-radius: 4px;
+      box-shadow: 0 1px 6px rgba(37, 99, 255, 0.4);
+    }
+    /* Sliding glass capsule hover pill */
+    .nav-hover-pill {
+      position: absolute !important;
+      height: 36px !important;
+      background: rgba(37, 99, 255, 0.05) !important;
+      border: 1px solid rgba(37, 99, 255, 0.12) !important;
+      border-radius: 100px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      left: 0;
+      width: 0;
+      opacity: 0;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .nav-cta {
+      background: rgba(255, 255, 255, .55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      color: #0b1b53;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all .3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-cta:hover {
+      background: rgba(255, 255, 255, .8);
+      box-shadow: 0 4px 20px rgba(37, 99, 255, .1);
+      border-color: rgba(37, 99, 255, 0.2);
+    }
+    .nav-cta-icon {
+      width: 28px;
+      height: 28px;
+      background: rgba(37, 99, 255, 0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #0b1b53;
+      transition: all 0.3s ease;
+    }
+    .nav-cta:hover .nav-cta-icon {
+      background: #2563ff;
+      color: #ffffff;
+    }
+    .nav-menu-btn {
+      display: none;
+      border: none;
+      background: none;
+    }
+    @media (max-width: 1024px) {
+      nav.header-nav, nav {
+        padding: 3px 32px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        top: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+      }
+      .logo-img {
+        height: 130px !important;
+        margin: -30px 0 !important;
+      }
+      .nav-links {
+        gap: 32px;
+      }
+    }
+    @media (max-width: 768px) {
+      nav.header-nav, nav {
+        padding: 2px 20px !important;
+        border-radius: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        top: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+      }
+      nav.header-nav.nav-open, nav.nav-open {
+        z-index: 2000 !important;
+        position: sticky;
+      }
+      .logo-img {
+        height: 110px !important;
+        margin: -25px 0 !important;
+      }
+      .nav-links {
+        display: none;
+      }
+      /* ═══ FUTURISTIC MOBILE MENU ═══ */
+      nav.header-nav.nav-open .nav-links, nav.nav-open .nav-links {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center !important;
+        position: absolute;
+        top: calc(100% + 8px) !important;
+        right: 20px !important;
+        left: auto !important;
+        width: 85% !important;
+        height: 78vh !important;
+        max-height: 78vh !important;
+        background: #f3f5fb !important;
+        background-image:
+          radial-gradient(ellipse at 20% 0%, rgba(37, 99, 255, 0.06) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 100%, rgba(99, 102, 241, 0.04) 0%, transparent 50%) !important;
+        border: 1px solid rgba(37, 99, 255, 0.08) !important;
+        border-radius: 24px !important;
+        padding: 36px 24px 40px !important;
+        gap: 0;
+        box-shadow:
+          0 30px 80px rgba(8, 20, 46, 0.12),
+          0 8px 24px rgba(8, 20, 46, 0.06),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        z-index: 1000;
+        box-sizing: border-box;
+        transform-origin: top right;
+        animation: menuReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        overflow: hidden;
+      }
+
+      /* Frosted glass shimmer sweep */
+      nav.header-nav.nav-open .nav-links::before, nav.nav-open .nav-links::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%; width: 300%; height: 100%;
+        background: linear-gradient(
+          105deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.4) 42%,
+          rgba(255, 255, 255, 0.7) 50%,
+          rgba(255, 255, 255, 0.4) 58%,
+          transparent 70%
+        );
+        animation: menuShimmer 2.5s ease-in-out 0.6s 1 both;
+        pointer-events: none;
+        z-index: 0;
+      }
+      /* Accent glow at top edge */
+      nav.header-nav.nav-open .nav-links::after, nav.nav-open .nav-links::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 10%; right: 10%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #2563ff, #6366f1, #2563ff, transparent);
+        opacity: 0.5;
+        z-index: 2;
+        animation: glowLine 2s ease-in-out infinite alternate;
+      }
+      @keyframes glowLine {
+        0% { opacity: 0.3; filter: blur(1px); }
+        100% { opacity: 0.7; filter: blur(0px); }
+      }
+      @keyframes menuShimmer {
+        0% { transform: translateX(-40%); }
+        100% { transform: translateX(20%); }
+      }
+      @keyframes menuReveal {
+        0% { opacity: 0; transform: scaleY(0.3) translateY(-20px); }
+        40% { opacity: 0.6; transform: scaleY(0.95) translateY(0); }
+        65% { transform: scaleY(1.02); }
+        80% { transform: scaleY(0.99); }
+        100% { opacity: 1; transform: scaleY(1) translateY(0); }
+      }
+      @keyframes navItemSlideIn {
+        0% { opacity: 0; transform: translateX(-30px); }
+        50% { opacity: 0.6; transform: translateX(6px); }
+        70% { transform: translateX(-2px); }
+        100% { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes glowPulse {
+        0%, 100% { box-shadow: 0 0 8px rgba(37, 99, 255, 0.15), inset 0 0 0 rgba(37, 99, 255, 0); }
+        50% { box-shadow: 0 0 20px rgba(37, 99, 255, 0.25), inset 0 0 12px rgba(37, 99, 255, 0.03); }
+      }
+      nav.header-nav.nav-open .nav-links li, nav.nav-open .nav-links li {
+        width: 100%;
+        text-align: left;
+        opacity: 0;
+        position: relative;
+        z-index: 1;
+        animation: navItemSlideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      nav.header-nav.nav-open .nav-links li:nth-child(1), nav.nav-open .nav-links li:nth-child(1) { animation-delay: 0.2s; }
+      nav.header-nav.nav-open .nav-links li:nth-child(2), nav.nav-open .nav-links li:nth-child(2) { animation-delay: 0.35s; }
+      nav.header-nav.nav-open .nav-links li:nth-child(3), nav.nav-open .nav-links li:nth-child(3) { animation-delay: 0.5s; }
+      nav.header-nav.nav-open .nav-links li:nth-child(4), nav.nav-open .nav-links li:nth-child(4) { animation-delay: 0.65s; }
+      nav.header-nav.nav-open .nav-links li:nth-child(5), nav.nav-open .nav-links li:nth-child(5) { animation-delay: 0.8s; }
+
+      nav.header-nav.nav-open .nav-links a, nav.nav-open .nav-links a {
+        font-family: 'Tektur', sans-serif !important;
+        font-size: 23px !important;
+        font-weight: 600 !important;
+        letter-spacing: -0.02em;
+        color: #3a4a6b;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 24px 18px 28px;
+        margin: 3px 0;
+        border-radius: 16px;
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        border: 1.5px solid transparent;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+      }
+      /* Left accent bar — extends on hover */
+      nav.header-nav.nav-open .nav-links a::before, nav.nav-open .nav-links a::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 0;
+        background: linear-gradient(180deg, #2563ff, #6366f1);
+        border-radius: 0 4px 4px 0;
+        transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      /* Sliding arrow indicator */
+      nav.header-nav.nav-open .nav-links a::after, nav.nav-open .nav-links a::after {
+        content: '›';
+        position: absolute;
+        right: 24px;
+        font-size: 26px;
+        font-weight: 300;
+        opacity: 0;
+        transform: translateX(-12px);
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        color: #2563ff;
+      }
+      /* Hover state — futuristic glow card */
+      nav.header-nav.nav-open .nav-links a:hover, nav.header-nav.nav-open .nav-links a:active,
+      nav.nav-open .nav-links a:hover, nav.nav-open .nav-links a:active {
+        color: #0b1b53;
+        background: linear-gradient(135deg, #ffffff, #f0f4ff);
+        border-color: rgba(37, 99, 255, 0.12);
+        box-shadow:
+          0 8px 32px rgba(37, 99, 255, 0.10),
+          0 2px 8px rgba(8, 20, 46, 0.04),
+          inset 0 1px 0 rgba(255, 255, 255, 1);
+        transform: translateX(4px) scale(1.015);
+      }
+      nav.header-nav.nav-open .nav-links a:hover::before, nav.nav-open .nav-links a:hover::before {
+        height: 60%;
+      }
+      nav.header-nav.nav-open .nav-links a:hover::after, nav.nav-open .nav-links a:hover::after {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      /* Touch feedback */
+      nav.header-nav.nav-open .nav-links a:active, nav.nav-open .nav-links a:active {
+        transform: translateX(4px) scale(0.98) !important;
+        transition-duration: 0.1s !important;
+      }
+      /* Active page — persistent glow */
+      nav.header-nav.nav-open .nav-links li.nav-active a, nav.nav-open .nav-links li.nav-active a {
+        color: #2563ff !important;
+        font-weight: 700 !important;
+        background: linear-gradient(135deg, rgba(37, 99, 255, 0.06), rgba(99, 102, 241, 0.03));
+        border-color: rgba(37, 99, 255, 0.15);
+        animation: glowPulse 3s ease-in-out infinite;
+      }
+      nav.header-nav.nav-open .nav-links li.nav-active a::before, nav.nav-open .nav-links li.nav-active a::before {
+        height: 50%;
+        background: linear-gradient(180deg, #2563ff, #6366f1);
+        box-shadow: 0 0 12px rgba(37, 99, 255, 0.4);
+      }
+      nav.header-nav.nav-open .nav-links li.nav-active::after, nav.nav-open .nav-links li.nav-active::after {
+        display: none;
+      }
+      .nav-cta {
+        display: flex !important;
+        font-size: 0 !important; /* Hide text node "Sign In" */
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto !important; /* Push next to hamburger on the right */
+        margin-right: 12px !important; /* Premium spacing before hamburger */
+        min-width: unset !important;
+        width: auto !important;
+        height: auto !important;
+      }
+      .nav-cta-icon {
+        margin: 0 !important;
+        width: 38px !important;
+        height: 38px !important;
+        background: rgba(37, 99, 255, 0.08) !important;
+        border: 1px solid rgba(37, 99, 255, 0.12) !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        color: #2563ff !important;
+        font-size: 16px !important;
+      }
+      .nav-menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.6) !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        border: 1.5px solid rgba(37, 99, 255, 0.15) !important;
+        color: #2563ff !important;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 255, 0.05) !important;
+      }
+      .nav-menu-btn:hover, .nav-menu-btn:active {
+        background: rgba(37, 99, 255, 0.06) !important;
+        border-color: rgba(37, 99, 255, 0.3) !important;
+        transform: scale(1.05) !important;
+        box-shadow: 0 4px 18px rgba(37, 99, 255, 0.15) !important;
+      }
+      .nav-menu-btn svg {
+        width: 20px !important;
+        height: 20px !important;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .nav-menu-btn svg line {
+        stroke: currentColor !important;
+        stroke-width: 3px !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      nav.nav-open .nav-menu-btn,
+      nav.header-nav.nav-open .nav-menu-btn {
+        background: rgba(255, 42, 95, 0.06) !important;
+        border-color: rgba(255, 42, 95, 0.3) !important;
+        color: #ff2a5f !important;
+        box-shadow: 0 4px 18px rgba(255, 42, 95, 0.15) !important;
+        transform: scale(1.05) rotate(90deg) !important;
+      }
+    }
+
+    /* Footer styles */
+    .futuristic-footer {
+      background: radial-gradient(circle at 80% 0%, rgba(37, 99, 255, 0.04) 0%, transparent 50%),
+                  radial-gradient(circle at 20% 90%, rgba(79, 139, 255, 0.02) 0%, transparent 60%),
+                  #ffffff;
+      color: #0b1b53;
+      padding: 100px 52px 60px 52px;
+      border-top: 1px solid rgba(37, 99, 255, 0.08);
+      position: relative;
+      z-index: 150;
+      overflow: hidden;
+      font-family: 'Tektur', sans-serif;
+    }
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .footer-nav-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 60px;
+    }
+    .footer-nav-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .footer-nav-logo-col {
+      padding-right: 40px;
+    }
+    .footer-nav-col-title {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: #08142e;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .footer-nav-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-nav-links a {
+      font-family: 'Tektur', sans-serif;
+      font-size: 14px;
+      color: #64748b;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-block;
+    }
+    .footer-nav-links a:hover {
+      color: #2563ff;
+      transform: translateX(3px);
+    }
+    .footer-trust-indicators {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .footer-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .footer-trust-item svg {
+      width: 14px;
+      height: 14px;
+      color: #10b981;
+    }
+    .footer-trust-strip {
+      background: rgba(37, 99, 255, 0.02);
+      border: 1px solid rgba(37, 99, 255, 0.06);
+      border-radius: 20px;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .footer-trust-strip-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      justify-content: center;
+    }
+    .footer-trust-strip-item:not(:last-child) {
+      border-right: 1px solid rgba(37, 99, 255, 0.08);
+    }
+    .footer-trust-strip-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      background: #ffffff;
+      border: 1px solid rgba(37, 99, 255, 0.08);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(37, 99, 255, 0.03);
+    }
+    .footer-trust-strip-icon svg {
+      width: 20px;
+      height: 20px;
+      color: #2563ff;
+    }
+    .footer-trust-strip-label {
+      font-family: 'Tektur', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0b1b53;
+    }
+    .footer-legal-bar {
+      border-top: 1px solid rgba(37, 99, 255, 0.08);
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    .footer-legal-left {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .footer-legal-center {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-legal-center a {
+      font-size: 13px;
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-legal-center a:hover {
+      color: #2563ff;
+    }
+    .footer-legal-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .footer-legal-tagline {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 12px;
+    }
+    .footer-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(37, 99, 255, 0.02);
+      border: 1px solid rgba(37, 99, 255, 0.06);
+      color: #64748b;
+      transition: all 0.2s ease;
+    }
+    .footer-social-link:hover {
+      background: rgba(37, 99, 255, 0.08);
+      color: #2563ff;
+      transform: translateY(-2px);
+      border-color: rgba(37, 99, 255, 0.2);
+    }
+    .footer-social-link svg {
+      width: 16px;
+      height: 16px;
+    }
+    @media (max-width: 1024px) {
+      .futuristic-footer {
+        padding: 80px 32px 40px 32px;
+      }
+      .footer-nav-grid {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 32px;
+      }
+      .footer-nav-logo-col {
+        grid-column: span 3;
+        padding-right: 0;
+        margin-bottom: 16px;
+      }
+      .footer-trust-strip {
+        flex-wrap: wrap;
+        padding: 20px;
+      }
+      .footer-trust-strip-item {
+        flex: 1 1 40%;
+        justify-content: flex-start;
+      }
+      .footer-trust-strip-item:nth-child(even) {
+        border-right: none;
+      }
+    }
+    @media (max-width: 768px) {
+      .futuristic-footer {
+        padding: 60px 20px 30px 20px;
+      }
+      .footer-nav-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .footer-nav-logo-col {
+        grid-column: span 2;
+      }
+      .footer-trust-strip {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 20px !important;
+        gap: 12px !important;
+      }
+      .footer-trust-strip-item {
+        border-right: none !important;
+        justify-content: flex-start !important;
+        padding: 8px 0 !important;
+        border-bottom: 1px solid rgba(37, 99, 255, 0.04) !important;
+      }
+      .footer-trust-strip-item:last-child {
+        border-bottom: none !important;
+      }
+      .footer-legal-bar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+      .footer-legal-right {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+
+    /* Futuristic & Interactive Overrides (Matching Collections & Assessment pages) */
+    
+    body {
+        background: radial-gradient(circle at 10% 20%, rgba(79, 140, 255, 0.05) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.04) 0%, transparent 40%),
+                    linear-gradient(180deg, #F8FAFF 0%, #FAFAF8 100%) !important;
+    }
+
+    /* Futuristic & Volumetric overrides for Editorial Intro */
+    .editorial-intro {
+        position: relative !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.35)) !important;
+        backdrop-filter: blur(40px) !important;
+        -webkit-backdrop-filter: blur(40px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.75) !important;
+        box-shadow: 
+            0 40px 100px rgba(37, 99, 255, 0.05),
+            0 10px 30px rgba(8, 27, 75, 0.01),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        overflow: hidden !important;
+        perspective: 1000px !important;
+        transform-style: preserve-3d !important;
+    }
+
+    .editorial-intro .intro-left,
+    .editorial-intro .intro-right,
+    .editorial-intro .glass-bubble {
+        transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        will-change: transform;
+    }
+
+    .editorial-intro .eyebrow {
+        display: inline-flex !important;
+        align-items: center !important;
+        background: rgba(36, 72, 255, 0.06) !important;
+        border: 1px solid rgba(36, 72, 255, 0.15) !important;
+        padding: 6px 16px !important;
+        border-radius: 100px !important;
+        font-family: 'Tektur', sans-serif !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 2px !important;
+        color: #2448FF !important;
+        text-transform: uppercase !important;
+        box-shadow: 0 4px 12px rgba(36, 72, 255, 0.05) !important;
+        margin-bottom: 8px !important;
+        align-self: flex-start !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .editorial-intro:hover .eyebrow {
+        background: rgba(36, 72, 255, 0.1) !important;
+        border-color: rgba(36, 72, 255, 0.3) !important;
+        box-shadow: 0 4px 20px rgba(36, 72, 255, 0.15) !important;
+    }
+
+    .editorial-intro .ambient-grid-overlay {
+        position: absolute !important;
+        inset: 0 !important;
+        background-image: 
+            linear-gradient(rgba(37, 99, 255, 0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(37, 99, 255, 0.025) 1px, transparent 1px) !important;
+        background-size: 50px 50px !important;
+        z-index: 1 !important;
+        pointer-events: none !important;
+    }
+
+    /* Volumetric glowing halos shifted by JS mouse coords */
+    .editorial-intro .card-glow-halo {
+        position: absolute !important;
+        width: 380px !important;
+        height: 380px !important;
+        border-radius: 50% !important;
+        filter: blur(60px) !important;
+        pointer-events: none !important;
+        z-index: 0 !important;
+        opacity: 0.28 !important;
+        mix-blend-mode: screen !important;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .editorial-intro .card-glow-halo.blue {
+        background: radial-gradient(circle, #2448FF 0%, transparent 70%) !important;
+        top: -100px !important;
+        left: -100px !important;
+        transform: translate(var(--mx, 0px), var(--my, 0px)) !important;
+    }
+
+    .editorial-intro .card-glow-halo.purple {
+        background: radial-gradient(circle, #7C3AED 0%, transparent 70%) !important;
+        bottom: -100px !important;
+        right: -100px !important;
+        transform: translate(calc(-1 * var(--mx, 0px)), calc(-1 * var(--my, 0px))) !important;
+    }
+
+    /* Floating particles background inside editorial hero */
+    .editorial-intro .card-particles {
+        position: absolute !important;
+        inset: 0 !important;
+        pointer-events: none !important;
+        z-index: 1 !important;
+    }
+
+    .editorial-intro .card-particles .particle {
+        position: absolute !important;
+        background: radial-gradient(circle, rgba(37, 99, 255, 0.4) 0%, transparent 100%) !important;
+        border-radius: 50% !important;
+        animation: floatParticles 8s infinite ease-in-out !important;
+    }
+
+    @keyframes floatParticles {
+        0%, 100% {
+            transform: translateY(0) scale(1);
+            opacity: 0.3;
+        }
+        50% {
+            transform: translateY(-20px) scale(1.2);
+            opacity: 0.6;
+        }
+    }
+
+    /* Futuristic Scroll down indicator with mouse wheel anim */
+    .editorial-intro .scroll-indicator {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 16px !important;
+        background: rgba(255, 255, 255, 0.5) !important;
+        border: 1px solid rgba(37, 99, 255, 0.12) !important;
+        border-radius: 50px !important;
+        padding: 10px 24px !important;
+        box-shadow: 0 4px 15px rgba(37, 99, 255, 0.03) !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        cursor: pointer !important;
+        margin-top: 16px !important;
+        align-self: flex-start !important;
+        z-index: 5 !important;
+    }
+
+    .editorial-intro .scroll-indicator:hover {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border-color: rgba(37, 99, 255, 0.3) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(37, 99, 255, 0.08) !important;
+    }
+
+    .editorial-intro .scroll-text {
+        font-family: 'Tektur', sans-serif !important;
+        font-size: 13px !important;
+        font-weight: 800 !important;
+        color: #2448FF !important;
+        letter-spacing: 2px !important;
+    }
+
+    .editorial-intro .mouse-icon {
+        width: 18px !important;
+        height: 28px !important;
+        border: 2px solid #2448FF !important;
+        border-radius: 9px !important;
+        position: relative !important;
+        display: flex !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+
+    .editorial-intro .wheel-dot {
+        width: 3px !important;
+        height: 6px !important;
+        background: #2448FF !important;
+        border-radius: 3px !important;
+        position: absolute !important;
+        top: 5px !important;
+        animation: scrollWheel 1.5s infinite !important;
+    }
+
+    @keyframes scrollWheel {
+        0% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        50% {
+            transform: translateY(6px);
+            opacity: 0.3;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* Glassmorphism and Hologram enhancements on Health Universe section */
+    .health-universe-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6)) !important;
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid rgba(255, 255, 255, 0.85) !important;
+        box-shadow: 0 40px 100px rgba(79, 140, 255, 0.06), 0 10px 30px rgba(8, 27, 75, 0.02) !important;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Ambient glow under the Three.js hologram */
+    .health-universe-section .ambient-glow {
+        background: radial-gradient(circle, rgba(36, 72, 255, 0.28) 0%, rgba(124, 58, 237, 0.1) 50%, transparent 70%) !important;
+        filter: blur(50px) !important;
+        width: 600px !important;
+        height: 600px !important;
+    }
+
+    /* Orbiting nodes and interactive indicators */
+    .orbit-node {
+        background: rgba(255, 255, 255, 0.8) !important;
+        backdrop-filter: blur(16px) saturate(140%) !important;
+        -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 10px 30px rgba(8, 27, 75, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .orbit-node:hover {
+        transform: translate(-50%, -50%) translateY(-6px) scale(1.08) !important;
+        border-color: rgba(36, 72, 255, 0.35) !important;
+        box-shadow: 0 20px 40px rgba(36, 72, 255, 0.2) !important;
+    }
+
+    .orbit-node.active-dimension {
+        background: linear-gradient(135deg, var(--primary-blue), #5b21b6) !important;
+        border-color: transparent !important;
+        box-shadow: 0 0 30px rgba(36, 72, 255, 0.45), 0 10px 30px rgba(124, 58, 237, 0.25) !important;
+    }
+
+    /* Product Cards Premium Spatial Glassmorphism */
+    .product-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.65)) !important;
+        background-image: 
+            radial-gradient(circle at top left, rgba(79, 140, 255, 0.22) 0%, transparent 45%),
+            radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.15) 0%, transparent 45%),
+            linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.68)) !important;
+        backdrop-filter: blur(40px) !important;
+        -webkit-backdrop-filter: blur(40px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.95) !important;
+        border-radius: 40px !important;
+        box-shadow: 
+            0 40px 100px rgba(79, 140, 255, 0.12),
+            0 10px 30px rgba(8, 27, 75, 0.03),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .product-card:hover {
+        transform: translateY(-12px) scale(1.03) !important;
+        border-color: rgba(255, 255, 255, 0.98) !important;
+    }
+
+    /* Dynamic Hover Glow Shadows per product identity */
+    .product-card[data-id="p1"]:hover {
+        box-shadow: 0 40px 80px rgba(36, 72, 255, 0.22), 0 10px 30px rgba(8, 27, 75, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+    .product-card[data-id="p2"]:hover {
+        box-shadow: 0 40px 80px rgba(236, 72, 153, 0.22), 0 10px 30px rgba(8, 27, 75, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+    .product-card[data-id="p3"]:hover {
+        box-shadow: 0 40px 80px rgba(255, 138, 0, 0.22), 0 10px 30px rgba(8, 27, 75, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+    .product-card[data-id="p4"]:hover {
+        box-shadow: 0 40px 80px rgba(6, 182, 212, 0.22), 0 10px 30px rgba(8, 27, 75, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+    .product-card[data-id="p5"]:hover {
+        box-shadow: 0 40px 80px rgba(124, 58, 237, 0.22), 0 10px 30px rgba(8, 27, 75, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+
+    /* Bottle Graphic Floating Interaction */
+    .product-visual {
+        position: relative;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .bottle-svg {
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        will-change: transform;
+    }
+    .product-card:hover .bottle-svg {
+        transform: translateY(-8px) scale(1.06) !important;
+    }
+    
+    .glow-under-bottle {
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .product-card:hover .glow-under-bottle {
+        transform: scale(1.3) !important;
+        opacity: 0.8 !important;
+    }
+
+    /* Add to Stack Button Animations */
+    .add-to-stack-btn {
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .add-to-stack-btn:hover {
+        transform: scale(1.15) rotate(90deg) !important;
+        background: var(--primary-blue) !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 15px rgba(36, 72, 255, 0.45) !important;
+    }
+
+
+    /* Timeline and Progress Section */
+    .timeline-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.65)) !important;
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 40px 100px rgba(79, 140, 255, 0.06), 0 10px 30px rgba(8, 27, 75, 0.02) !important;
+    }
+
+
+    /* Floating Glass Bubble Animation Elements */
+    .glass-bubble {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.15) 60%, transparent 100%);
+        box-shadow: 
+            inset 0 2px 8px rgba(255, 255, 255, 0.8),
+            inset 0 -2px 8px rgba(79, 140, 255, 0.15),
+            0 8px 20px rgba(8, 27, 75, 0.04);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        pointer-events: none;
+        z-index: 1;
+        animation: floatBubble 15s infinite ease-in-out;
+    }
+
+    @keyframes floatBubble {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-30px) rotate(180deg); }
+    }
+
+    .editorial-intro .glass-bubble.b1 { width: 50px; height: 50px; left: 8%; top: 12%; animation-delay: 0s; }
+    .editorial-intro .glass-bubble.b2 { width: 30px; height: 30px; left: 45%; bottom: 10%; animation-delay: 3s; }
+    .editorial-intro .glass-bubble.b3 { width: 40px; height: 40px; right: 10%; top: 20%; animation-delay: 1.5s; }
+
+    .health-universe-section .glass-bubble.b4 { width: 60px; height: 60px; left: 5%; top: 30%; animation-delay: 2s; }
+    .health-universe-section .glass-bubble.b5 { width: 35px; height: 35px; right: 6%; bottom: 15%; animation-delay: 4.5s; }
+
+    /* Premium Interactive Sort Dropdown & List Layout overrides */
+    .sort-dropdown-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .sort-dropdown-btn {
+        background: rgba(255, 255, 255, 0.45) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.7) !important;
+        border-radius: 30px !important;
+        padding: 10px 20px !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        color: #64748B !important;
+        cursor: pointer !important;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        white-space: nowrap !important;
+        box-shadow: 0 4px 12px rgba(8, 20, 46, 0.02) !important;
+    }
+
+    .sort-dropdown-btn:hover {
+        background: rgba(255, 255, 255, 0.75) !important;
+        color: #0b1b53 !important;
+        border-color: rgba(36, 72, 255, 0.2) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 8px 20px rgba(36, 72, 255, 0.06) !important;
+    }
+
+    .sort-dropdown-btn strong {
+        color: #0b1b53 !important;
+        font-weight: 600 !important;
+    }
+
+    .sort-dropdown-btn .chevron-icon {
+        width: 16px !important;
+        height: 16px !important;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        color: #64748B !important;
+    }
+
+    .sort-dropdown-container.open .sort-dropdown-btn .chevron-icon {
+        transform: rotate(180deg) !important;
+    }
+
+    .sort-dropdown-menu {
+        position: absolute !important;
+        top: calc(100% + 8px) !important;
+        right: 0 !important;
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+        border-radius: 18px !important;
+        padding: 8px !important;
+        list-style: none !important;
+        margin: 0 !important;
+        min-width: 190px !important;
+        z-index: 100 !important;
+        display: none !important; /* Controlled by JS active state */
+        flex-direction: column !important;
+        gap: 4px !important;
+        box-shadow: 0 20px 40px rgba(8, 20, 46, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+        transform: translateY(10px) !important;
+        opacity: 0 !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transform-origin: top right !important;
+    }
+
+    .sort-dropdown-container.open .sort-dropdown-menu {
+        display: flex !important;
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+    }
+
+    .sort-menu-item {
+        padding: 10px 16px !important;
+        border-radius: 12px !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        color: #64748B !important;
+        cursor: pointer !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        white-space: nowrap !important;
+        text-align: left !important;
+    }
+
+    .sort-menu-item:hover {
+        background: rgba(36, 72, 255, 0.06) !important;
+        color: #2448FF !important;
+        transform: translateX(4px) !important;
+    }
+
+    .sort-menu-item.active {
+        background: #2448FF !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+    }
+
+    .sort-menu-item.active:hover {
+        background: #2448FF !important;
+        color: #ffffff !important;
+        transform: none !important;
+    }
+
+    /* Override static layout-btn styling */
+    .layout-btn {
+        background: rgba(255, 255, 255, 0.45) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.7) !important;
+        border-radius: 50% !important;
+        width: 38px !important;
+        height: 38px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        color: #94A3B8 !important;
+        box-shadow: 0 4px 12px rgba(8, 20, 46, 0.02) !important;
+    }
+
+    .layout-btn:hover {
+        background: rgba(255, 255, 255, 0.75) !important;
+        color: #0b1b53 !important;
+        border-color: rgba(36, 72, 255, 0.2) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    .layout-btn.active {
+        background: #0b1b53 !important;
+        color: #ffffff !important;
+        border-color: #0b1b53 !important;
+        box-shadow: 0 8px 20px rgba(8, 27, 83, 0.15) !important;
+    }
+
+    /* List Layout for Product Catalog */
+    .product-cards-slider.list-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+    }
+
+    .product-cards-slider.list-layout .product-card {
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 20px 32px !important;
+        gap: 24px !important;
+    }
+
+    .product-cards-slider.list-layout .product-card .product-visual {
+        width: 110px !important;
+        height: 110px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .product-cards-slider.list-layout .product-card .product-info {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-grow: 1 !important;
+        gap: 24px !important;
+    }
+
+    .product-cards-slider.list-layout .product-card .product-title {
+        font-size: 18px !important;
+        margin: 0 !important;
+        min-width: 100px !important;
+    }
+
+    .product-cards-slider.list-layout .product-card .product-desc {
+        margin: 0 !important;
+        font-size: 13px !important;
+        color: #64748B !important;
+        flex-grow: 1 !important;
+        max-width: 320px !important;
+    }
+
+    .product-cards-slider.list-layout .product-card .product-cat {
+        display: none !important;
+    }
+
+    /* Mobile view responsive grid/list updates */
+    @media (max-width: 768px) {
+        .product-cards-slider.list-layout .product-card {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            padding: 24px !important;
+            gap: 16px !important;
+        }
+
+        .product-cards-slider.list-layout .product-card .product-visual {
+            width: 100% !important;
+            height: 140px !important;
+        }
+
+        .product-cards-slider.list-layout .product-card .product-info {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+        }
+
+        .product-cards-slider.list-layout .product-card .product-desc {
+            max-width: 100% !important;
+        }
+
+        .layout-toggle {
+            justify-content: flex-end !important;
+            gap: 12px !important;
+            width: 100% !important;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .main-content > .ai-rec-card,
+        .main-content > .ai-analyzer-card,
+        .main-content > .stack-builder-card {
+            background: rgba(255, 255, 255, 0.45) !important;
+            backdrop-filter: blur(14px) !important;
+            -webkit-backdrop-filter: blur(14px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.7) !important;
+            border-radius: 24px !important;
+            padding: 24px !important;
+            margin: 24px 0 !important;
+            box-shadow: 0 8px 30px rgba(8, 20, 46, 0.02) !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+    }
+  </style>
+</head>
+<body>
+    <nav class="header-nav">
+      <a href="/" class="logo">
+        <img src="images/Logo.png" alt="STAKOR" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/collections">Collections</a></li>
+        <li class="nav-active"><a href="/universe">Health Universe</a></li>
+        <li><a href="/subscribe">Subscription</a></li>
+        <li><a href="/assessment">Assessment</a></li>
+      </ul>
+      <button class="nav-cta" type="button" onclick="window.location.href='/login'">
+        Sign In
+        <span class="nav-cta-icon">👤</span>
+      </button>
+      <button class="nav-menu-btn" type="button" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </nav>
+    <div class="app-container focus-mode">
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar-left">
+            <div class="brand-header">
+                <svg class="brand-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <span class="brand-name">STAKOR</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#health-universe" class="nav-item active">
+                    <i data-lucide="layout-grid"></i>
+                    <span>Health Universe</span>
+                </a>
+                <a href="#stack-builder" class="nav-item">
+                    <i data-lucide="layers"></i>
+                    <span>Stack Builder</span>
+                </a>
+                <a href="#health-radar" class="nav-item">
+                    <i data-lucide="activity"></i>
+                    <span>Health Radar</span>
+                </a>
+                <a href="#insights" class="nav-item">
+                    <i data-lucide="bar-chart-3"></i>
+                    <span>Insights</span>
+                </a>
+
+                <a href="#orders" class="nav-item">
+                    <i data-lucide="shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="#rewards" class="nav-item">
+                    <i data-lucide="gift"></i>
+                    <span>Rewards</span>
+                </a>
+                <a href="/assessment.html" class="nav-item" id="nav-assessment-btn">
+                    <i data-lucide="clipboard-list"></i>
+                    <span>Health Assessment</span>
+                </a>
+                <a href="#profile" class="nav-item">
+                    <i data-lucide="user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="health-score-container">
+                <div class="score-header">
+                    <span>Your Health Score</span>
+                    <i data-lucide="info" class="info-icon"></i>
+                </div>
+                <div class="score-ring-wrapper">
+                    <svg class="score-ring" viewBox="0 0 100 100">
+                        <circle class="ring-bg" cx="50" cy="50" r="42" />
+                        <circle class="ring-progress" cx="50" cy="50" r="42" />
+                    </svg>
+                    <div class="score-text">
+                        <span class="score-number" id="health-score-num">0</span>
+                        <span class="score-label">Excellent</span>
+                    </div>
+                </div>
+                <a href="#full-report" class="full-report-link">
+                    View full report <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <main class="main-content">
+
+
+            <!-- EDITORIAL INTRODUCTION -->
+            <section class="editorial-intro">
+                <!-- Ambient high-tech grid & glows -->
+                <div class="ambient-grid-overlay"></div>
+                <div class="card-glow-halo blue"></div>
+                <div class="card-glow-halo purple"></div>
+
+                <!-- Floating Ambient Particles inside Hero -->
+                <div class="card-particles">
+                    <span class="particle" style="width: 4px; height: 4px; left: 15%; top: 20%; animation-delay: 0s; animation-duration: 8s;"></span>
+                    <span class="particle" style="width: 3px; height: 3px; left: 85%; top: 35%; animation-delay: 2s; animation-duration: 10s;"></span>
+                    <span class="particle" style="width: 5px; height: 5px; left: 25%; top: 75%; animation-delay: 4s; animation-duration: 7s;"></span>
+                    <span class="particle" style="width: 2px; height: 2px; left: 70%; top: 80%; animation-delay: 1.5s; animation-duration: 9s;"></span>
+                    <span class="particle" style="width: 4px; height: 4px; left: 5%; top: 60%; animation-delay: 3s; animation-duration: 11s;"></span>
+                </div>
+
+                <!-- Floating Glass Bubbles -->
+                <div class="glass-bubble b1"></div>
+                <div class="glass-bubble b2"></div>
+                <div class="glass-bubble b3"></div>
+                
+                <div class="intro-left">
+                    <span class="eyebrow">OUR HEALTH UNIVERSE</span>
+                    <h1 class="intro-title">
+                        Your Health Universe.<br>
+                        Explore.<br>
+                        Optimize.<br>
+                        <span class="highlight-blue">Evolve.</span>
+                    </h1>
+                    <p class="intro-desc">
+                        Science-backed formulas to optimize 6 health dimensions. Select a dimension to explore.
+                    </p>
+                    <div class="scroll-indicator" id="scroll-to-universe">
+                        <span class="scroll-text">EXPLORE UNIVERSE</span>
+                        <div class="mouse-icon">
+                            <div class="wheel-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="intro-right">
+                    <div class="teaser-visual-wrapper">
+                        <canvas id="teaser-canvas"></canvas>
+                        <div class="teaser-ambient-glow"></div>
+                    </div>
+                </div>
+                <div class="intro-transition">
+                    <div class="transition-orbit-line"></div>
+                    <div class="transition-particles"></div>
+                </div>
+            </section>
+
+
+
+            <!-- HEALTH UNIVERSE VISUALIZATION -->
+            <section class="health-universe-section" id="health-universe">
+                <!-- Floating Glass Bubbles -->
+                <div class="glass-bubble b4"></div>
+                <div class="glass-bubble b5"></div>
+                <!-- Profile Selector HUD -->
+                <div class="profile-selector-hud">
+                    <button class="profile-btn" data-profile="unisex">
+                        <i data-lucide="user"></i> <span>Unisex</span>
+                    </button>
+                    <button class="profile-btn active" data-profile="male">
+                        <i data-lucide="user-check"></i> <span>Male</span>
+                    </button>
+                    <button class="profile-btn" data-profile="female">
+                        <i data-lucide="user-plus"></i> <span>Female</span>
+                    </button>
+                </div>
+
+
+                <!-- HOLOGRAM VISUAL SYSTEM -->
+                <div class="hologram-visual-system">
+                    <!-- Glow effects in background -->
+                    <div class="ambient-glow"></div>
+                    
+                    <!-- Expanded 3D Canvas Viewport -->
+                    <div class="body-container-3d">
+                        <div id="hologram-3d-viewport"></div>
+                        <div class="hologram-scanline"></div>
+                        
+                        <!-- Floating HUD helper -->
+                        <div class="hud-helper-badge">
+                            <span class="hud-radar-dot"></span>
+                            <span class="hud-text">360° DRAG TO ROTATE</span>
+                        </div>
+                    </div>
+
+                    <!-- Spatial 3D Scene Controls -->
+                    <div class="hologram-hud-controls">
+                        <button class="hud-control-btn active" id="btn-auto-rotate">
+                            <i data-lucide="refresh-cw"></i> <span>Auto Rotate</span>
+                        </button>
+                        <button class="hud-control-btn" id="btn-pause-rotate">
+                            <i data-lucide="pause"></i> <span>Pause</span>
+                        </button>
+                        <button class="hud-control-btn" id="btn-reset-view">
+                            <i data-lucide="rotate-ccw"></i> <span>Reset View</span>
+                        </button>
+                    </div>
+
+                    <!-- Orbiting Nodes -->
+                    <!-- Sleep -->
+                    <div class="orbit-node node-sleep" data-dimension="sleep">
+                        <div class="node-improvement-badge" id="badge-sleep">+0%</div>
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="moon"></i>
+                        </div>
+                        <div class="node-content">
+                            <span class="node-title">SLEEP</span>
+                            <span class="node-meta">14 Products</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Recovery -->
+                    <div class="orbit-node node-recovery" data-dimension="recovery">
+                        <div class="node-improvement-badge" id="badge-recovery">+0%</div>
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="award"></i>
+                        </div>
+                        <div class="node-content">
+                            <span class="node-title">RECOVERY</span>
+                            <span class="node-meta">15 Products</span>
+                        </div>
+                    </div>
+
+                    <!-- Metabolism -->
+                    <div class="orbit-node node-metabolism" data-dimension="metabolism">
+                        <div class="node-improvement-badge" id="badge-metabolism">+0%</div>
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="activity"></i>
+                        </div>
+                        <div class="node-content">
+                            <span class="node-title">METABOLISM</span>
+                            <span class="node-meta">13 Products</span>
+                        </div>
+                    </div>
+
+                    <!-- Foundation -->
+                    <div class="orbit-node node-foundation" data-dimension="foundation">
+                        <div class="node-improvement-badge" id="badge-foundation">+0%</div>
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="layers"></i>
+                        </div>
+                        <div class="node-content">
+                            <span class="node-title">FOUNDATION</span>
+                            <span class="node-meta">18 Products</span>
+                        </div>
+                    </div>
+
+                    <!-- Balance -->
+                    <div class="orbit-node node-balance" data-dimension="balance">
+                        <div class="node-improvement-badge" id="badge-balance">+0%</div>
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="scale"></i>
+                        </div>
+                        <div class="node-content">
+                            <span class="node-title">BALANCE</span>
+                            <span class="node-meta">11 Products</span>
+                        </div>
+                    </div>
+
+                    <!-- Energy -->
+                    <div class="orbit-node node-energy" data-dimension="energy">
+                        <div class="node-improvement-badge" id="badge-energy">+0%</div>
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="zap"></i>
+                        </div>
+                        <div class="node-content">
+                            <span class="node-title">ENERGY</span>
+                            <span class="node-meta">16 Products</span>
+                        </div>
+                    </div>
+
+                    <!-- Immunity -->
+                    <div class="orbit-node node-immunity" data-dimension="immunity">
+                        <div class="node-improvement-badge" id="badge-immunity">+0%</div>
+                        <div class="node-icon-wrapper">
+                            <i data-lucide="shield"></i>
+                        </div>
+                        <div class="node-content">
+                            <span class="node-title">IMMUNITY</span>
+                            <span class="node-meta">12 Products</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Immersive Product Orbit Modules (populated by JS) -->
+                    <div class="immersive-products-orbit" id="immersive-products-orbit"></div>
+                    
+                    <span class="hint-text">
+                        <i data-lucide="mouse-pointer-click"></i> Click any dimension to explore products
+                    </span>
+                </div>
+            </section>
+
+            <!-- EXPLORE PRODUCTS ROW -->
+            <section class="explore-section">
+                <div class="explore-header">
+                    <h2 class="section-title">EXPLORE ALL PRODUCTS</h2>
+                    <div class="filter-wrapper">
+                        <div class="filter-chips">
+                            <button class="filter-chip active" data-filter="all">All Products</button>
+                            <button class="filter-chip" data-filter="proven">Clinically Proven</button>
+                            <button class="filter-chip" data-filter="bestseller">Bestsellers</button>
+                            <button class="filter-chip" data-filter="new">New Arrivals</button>
+                            <button class="filter-chip" data-filter="trending">Trending</button>
+                        </div>
+                        <div class="layout-toggle">
+                            <div class="sort-dropdown-container">
+                                <button class="sort-dropdown-btn" id="sort-dropdown-btn" type="button">
+                                    <span class="sort-by-text">Sort by: <strong id="current-sort-label">Featured</strong></span>
+                                    <i data-lucide="chevron-down" class="chevron-icon"></i>
+                                </button>
+                                <ul class="sort-dropdown-menu" id="sort-dropdown-menu">
+                                    <li class="sort-menu-item active" data-sort="featured">Featured</li>
+                                    <li class="sort-menu-item" data-sort="price-low">Price: Low to High</li>
+                                    <li class="sort-menu-item" data-sort="price-high">Price: High to Low</li>
+                                    <li class="sort-menu-item" data-sort="rating">Customer Rating</li>
+                                </ul>
+                            </div>
+                            <div class="divider-v"></div>
+                            <button class="layout-btn active" id="layout-grid-btn" type="button"><i data-lucide="grid"></i></button>
+                            <button class="layout-btn" id="layout-list-btn" type="button"><i data-lucide="list"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="products-grid-row">
+                    <!-- Product Cards Container -->
+                    <div class="product-cards-slider" id="products-container">
+                        <!-- Product 1: Core -->
+                        <div class="product-card" data-id="p1" data-name="Core" data-category="foundation" data-price="2499" data-rating="4.9" data-reviews="4.2k" data-badge="proven" data-tags="foundation proven">
+                            <div class="card-badge proven">CLINICALLY PROVEN</div>
+                            <div class="profile-indicator unisex" title="Unisex Product"><i data-lucide="genders"></i></div>
+                            <div class="product-visual">
+                                <svg class="bottle-svg" viewBox="0 0 100 150">
+                                    <defs>
+                                        <linearGradient id="cap-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#08142E" />
+                                            <stop offset="50%" stop-color="#2448FF" />
+                                            <stop offset="100%" stop-color="#08142E" />
+                                        </linearGradient>
+                                        <linearGradient id="glass-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#FFFFFF" />
+                                            <stop offset="40%" stop-color="#F4F5F7" />
+                                            <stop offset="100%" stop-color="#E1E3E8" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad)" />
+                                    <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                                    <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad)" stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                                    <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" />
+                                    <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" shadow="0 2px 4px rgba(0,0,0,0.05)" />
+                                    <rect x="27" y="65" width="46" height="5" rx="1" fill="#2448FF" />
+                                    <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E" text-anchor="middle">CORE</text>
+                                    <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280" text-anchor="middle">DAILY BASE</text>
+                                    <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#2448FF" text-anchor="middle">FOUNDATION</text>
+                                </svg>
+                                <div class="glow-under-bottle" style="background: rgba(36, 72, 255, 0.2)"></div>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-cat">FOUNDATION</span>
+                                <h3 class="product-title">Core</h3>
+                                <p class="product-desc">Daily nutritional foundation for energy.</p>
+                                <div class="product-rating">
+                                    <i data-lucide="star" class="star-icon"></i>
+                                    <span class="rating-val">4.9</span>
+                                    <span class="reviews-count">(4.2k)</span>
+                                </div>
+                                <div class="product-price-action">
+                                    <span class="product-price">₹2,499</span>
+                                    <button class="add-to-stack-btn" title="Add to Stack">
+                                        <i data-lucide="plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 2: Satiety -->
+                        <div class="product-card" data-id="p2" data-name="Satiety" data-category="metabolism" data-price="2199" data-rating="4.7" data-reviews="1.5k" data-badge="proven" data-tags="metabolism proven">
+                            <div class="card-badge proven">SATIETY</div>
+                            <div class="profile-indicator unisex" title="Unisex Product"><i data-lucide="genders"></i></div>
+                            <div class="product-visual">
+                                <svg class="bottle-svg" viewBox="0 0 100 150">
+                                    <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad)" />
+                                    <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                                    <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad)" stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                                    <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" />
+                                    <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                                    <rect x="27" y="65" width="46" height="5" rx="1" fill="#EC4899" />
+                                    <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E" text-anchor="middle">SATIETY</text>
+                                    <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280" text-anchor="middle">CRAVING CTRL</text>
+                                    <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#EC4899" text-anchor="middle">WEIGHT</text>
+                                </svg>
+                                <div class="glow-under-bottle" style="background: rgba(236, 72, 153, 0.15)"></div>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-cat">WEIGHT MANAGEMENT</span>
+                                <h3 class="product-title">Satiety</h3>
+                                <p class="product-desc">Appetite control and hunger support.</p>
+                                <div class="product-rating">
+                                    <i data-lucide="star" class="star-icon"></i>
+                                    <span class="rating-val">4.7</span>
+                                    <span class="reviews-count">(1.5k)</span>
+                                </div>
+                                <div class="product-price-action">
+                                    <span class="product-price">₹2,199</span>
+                                    <button class="add-to-stack-btn" title="Add to Stack">
+                                        <i data-lucide="plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 3: Protein -->
+                        <div class="product-card" data-id="p3" data-name="Protein" data-category="recovery" data-price="3499" data-rating="4.8" data-reviews="2.9k" data-badge="bestseller" data-tags="recovery bestseller">
+                            <div class="card-badge bestseller">BESTSELLER</div>
+                            <div class="profile-indicator unisex" title="Unisex Product"><i data-lucide="genders"></i></div>
+                            <div class="product-visual">
+                                <svg class="bottle-svg" viewBox="0 0 100 150">
+                                    <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad)" />
+                                    <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                                    <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad)" stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                                    <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" />
+                                    <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                                    <rect x="27" y="65" width="46" height="5" rx="1" fill="#FF8A00" />
+                                    <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E" text-anchor="middle">PROTEIN</text>
+                                    <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280" text-anchor="middle">MUSCLE RECOVERY</text>
+                                    <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#FF8A00" text-anchor="middle">PERFORMANCE</text>
+                                </svg>
+                                <div class="glow-under-bottle" style="background: rgba(255, 138, 0, 0.15)"></div>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-cat">PERFORMANCE</span>
+                                <h3 class="product-title">Protein</h3>
+                                <p class="product-desc">Muscle recovery and strength development.</p>
+                                <div class="product-rating">
+                                    <i data-lucide="star" class="star-icon"></i>
+                                    <span class="rating-val">4.8</span>
+                                    <span class="reviews-count">(2.9k)</span>
+                                </div>
+                                <div class="product-price-action">
+                                    <span class="product-price">₹3,499</span>
+                                    <button class="add-to-stack-btn" title="Add to Stack">
+                                        <i data-lucide="plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 4: Glucose -->
+                        <div class="product-card" data-id="p4" data-name="Glucose" data-category="metabolism" data-price="2299" data-rating="4.8" data-reviews="1.9k" data-badge="trending" data-tags="metabolism trending">
+                            <div class="card-badge trending">TRENDING</div>
+                            <div class="profile-indicator unisex" title="Unisex Product"><i data-lucide="genders"></i></div>
+                            <div class="product-visual">
+                                <svg class="bottle-svg" viewBox="0 0 100 150">
+                                    <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad)" />
+                                    <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                                    <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad)" stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                                    <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" />
+                                    <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                                    <rect x="27" y="65" width="46" height="5" rx="1" fill="#06B6D4" />
+                                    <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E" text-anchor="middle">GLUCOSE</text>
+                                    <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280" text-anchor="middle">SUGAR BALANCE</text>
+                                    <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#06B6D4" text-anchor="middle">METABOLISM</text>
+                                </svg>
+                                <div class="glow-under-bottle" style="background: rgba(6, 182, 212, 0.15)"></div>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-cat">METABOLIC HEALTH</span>
+                                <h3 class="product-title">Glucose</h3>
+                                <p class="product-desc">Blood sugar balance and energy regulation.</p>
+                                <div class="product-rating">
+                                    <i data-lucide="star" class="star-icon"></i>
+                                    <span class="rating-val">4.8</span>
+                                    <span class="reviews-count">(1.9k)</span>
+                                </div>
+                                <div class="product-price-action">
+                                    <span class="product-price">₹2,299</span>
+                                    <button class="add-to-stack-btn" title="Add to Stack">
+                                        <i data-lucide="plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 5: Balance -->
+                        <div class="product-card" data-id="p5" data-name="Balance" data-category="balance" data-price="2699" data-rating="4.6" data-reviews="980" data-badge="new" data-tags="balance new">
+                            <div class="card-badge new">NEW</div>
+                            <div class="profile-indicator female" title="Female Only"><i data-lucide="venus"></i></div>
+                            <div class="product-visual">
+                                <svg class="bottle-svg" viewBox="0 0 100 150">
+                                    <rect x="35" y="10" width="30" height="15" rx="3" fill="url(#cap-grad)" />
+                                    <rect x="40" y="25" width="20" height="8" fill="#D1D5DB" />
+                                    <rect x="20" y="33" width="60" height="100" rx="15" fill="url(#glass-grad)" stroke="rgba(8, 20, 46, 0.08)" stroke-width="1" />
+                                    <path d="M 23 50 Q 30 40 40 45 Q 60 55 77 45" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" />
+                                    <rect x="23" y="60" width="54" height="60" rx="4" fill="#FFFFFF" />
+                                    <rect x="27" y="65" width="46" height="5" rx="1" fill="#7C3AED" />
+                                    <text x="50" y="82" font-family="'Outfit', sans-serif" font-size="7" font-weight="700" fill="#08142E" text-anchor="middle">BALANCE</text>
+                                    <text x="50" y="92" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#6B7280" text-anchor="middle">HORMONAL WELLNESS</text>
+                                    <text x="50" y="105" font-family="'Outfit', sans-serif" font-size="4" font-weight="600" fill="#7C3AED" text-anchor="middle">HORMONAL</text>
+                                </svg>
+                                <div class="glow-under-bottle" style="background: rgba(124, 58, 237, 0.15)"></div>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-cat">HORMONAL WELLNESS</span>
+                                <h3 class="product-title">Balance</h3>
+                                <p class="product-desc">Hormonal support, mood, and stress wellness.</p>
+                                <div class="product-rating">
+                                    <i data-lucide="star" class="star-icon"></i>
+                                    <span class="rating-val">4.6</span>
+                                    <span class="reviews-count">(980)</span>
+                                </div>
+                                <div class="product-price-action">
+                                    <span class="product-price">₹2,699</span>
+                                    <button class="add-to-stack-btn" title="Add to Stack">
+                                        <i data-lucide="plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROGRESS TIMELINE SECTION -->
+            <section class="timeline-section" id="insights">
+                <div class="timeline-header">
+                    <span class="eyebrow">YOUR HEALTH JOURNEY</span>
+                    <h2 class="section-title">EXPECTED PROGRESS TIMELINE</h2>
+                    <p class="timeline-desc">Track physical and cellular optimization metrics projected over 90 days of consistency.</p>
+                </div>
+                
+                <div class="timeline-container">
+                    <div class="timeline-steps">
+                        <div class="timeline-track-line">
+                            <div class="timeline-track-fill" id="timeline-track-fill"></div>
+                        </div>
+                        <!-- Day 1 -->
+                        <div class="timeline-step-node active" data-day="1">
+                            <div class="step-circle">1</div>
+                            <span class="step-day-label">Day 1</span>
+                        </div>
+                        <!-- Day 30 -->
+                        <div class="timeline-step-node" data-day="30">
+                            <div class="step-circle">30</div>
+                            <span class="step-day-label">Day 30</span>
+                        </div>
+                        <!-- Day 60 -->
+                        <div class="timeline-step-node" data-day="60">
+                            <div class="step-circle">60</div>
+                            <span class="step-day-label">Day 60</span>
+                        </div>
+                        <!-- Day 90 -->
+                        <div class="timeline-step-node" data-day="90">
+                            <div class="step-circle">90</div>
+                            <span class="step-day-label">Day 90</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-content-card">
+                        <div class="timeline-content-header">
+                            <h3 id="timeline-stage-title">Day 1: Adaptation</h3>
+                            <span class="timeline-stage-badge" id="timeline-stage-badge">Initial Stage</span>
+                        </div>
+                        <p class="timeline-stage-desc" id="timeline-stage-desc">Absorption of micronutrients begins. Cellular stress balancing initiates.</p>
+                        
+                        <div class="improvements-grid telemetry-grid">
+                            <!-- Energy -->
+                            <div class="telemetry-gauge-card" data-metric="energy">
+                                <div class="gauge-ring-wrapper">
+                                    <svg class="gauge-svg" viewBox="0 0 100 100">
+                                        <circle class="gauge-bg" cx="50" cy="50" r="40" />
+                                        <circle class="gauge-fill energy-glow" cx="50" cy="50" r="40" id="gauge-energy-fill" style="stroke-dasharray: 251.3; stroke-dashoffset: 251.3;" />
+                                    </svg>
+                                    <div class="gauge-value" id="gauge-energy-pct">+0%</div>
+                                </div>
+                                <div class="gauge-info">
+                                    <span class="gauge-label"><i data-lucide="zap"></i> ENERGY</span>
+                                    <span class="gauge-desc" id="imp-energy-val">Stable baseline, no afternoon crash</span>
+                                </div>
+                            </div>
+                            <!-- Recovery -->
+                            <div class="telemetry-gauge-card" data-metric="recovery">
+                                <div class="gauge-ring-wrapper">
+                                    <svg class="gauge-svg" viewBox="0 0 100 100">
+                                        <circle class="gauge-bg" cx="50" cy="50" r="40" />
+                                        <circle class="gauge-fill recovery-glow" cx="50" cy="50" r="40" id="gauge-recovery-fill" style="stroke-dasharray: 251.3; stroke-dashoffset: 251.3;" />
+                                    </svg>
+                                    <div class="gauge-value" id="gauge-recovery-pct">+0%</div>
+                                </div>
+                                <div class="gauge-info">
+                                    <span class="gauge-label"><i data-lucide="dumbbell"></i> RECOVERY</span>
+                                    <span class="gauge-desc" id="imp-recovery-val">Initial adaptation to muscle strain</span>
+                                </div>
+                            </div>
+                            <!-- Sleep -->
+                            <div class="telemetry-gauge-card" data-metric="sleep">
+                                <div class="gauge-ring-wrapper">
+                                    <svg class="gauge-svg" viewBox="0 0 100 100">
+                                        <circle class="gauge-bg" cx="50" cy="50" r="40" />
+                                        <circle class="gauge-fill sleep-glow" cx="50" cy="50" r="40" id="gauge-sleep-fill" style="stroke-dasharray: 251.3; stroke-dashoffset: 251.3;" />
+                                    </svg>
+                                    <div class="gauge-value" id="gauge-sleep-pct">+0%</div>
+                                </div>
+                                <div class="gauge-info">
+                                    <span class="gauge-label"><i data-lucide="moon"></i> SLEEP</span>
+                                    <span class="gauge-desc" id="imp-sleep-val">Gradual reduction in sleep latency</span>
+                                </div>
+                            </div>
+                            <!-- Metabolism -->
+                            <div class="telemetry-gauge-card" data-metric="metabolism">
+                                <div class="gauge-ring-wrapper">
+                                    <svg class="gauge-svg" viewBox="0 0 100 100">
+                                        <circle class="gauge-bg" cx="50" cy="50" r="40" />
+                                        <circle class="gauge-fill metabolism-glow" cx="50" cy="50" r="40" id="gauge-metabolism-fill" style="stroke-dasharray: 251.3; stroke-dashoffset: 251.3;" />
+                                    </svg>
+                                    <div class="gauge-value" id="gauge-metabolism-pct">+0%</div>
+                                </div>
+                                <div class="gauge-info">
+                                    <span class="gauge-label"><i data-lucide="activity"></i> METABOLISM</span>
+                                    <span class="gauge-desc" id="imp-metabolism-val">Initial digestive enzymes activation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+        </main>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="sidebar-right">
+            <!-- AI Recommendation Card -->
+            <div class="ai-rec-card">
+                <div class="ai-rec-header">
+                    <span class="ai-badge">AI STAKOR INTELLIGENCE</span>
+                    <span class="beta-badge">CONCIERGE</span>
+                </div>
+                
+                <div class="ai-orb-container">
+                    <!-- Custom Floating Glass Canvas Orb -->
+                    <div class="glass-orb">
+                        <spline-viewer url="https://prod.spline.design/jrwjM0DYSQkbIioB/scene.splinecode"></spline-viewer>
+                        <div class="orb-inner-glow"></div>
+                        <div class="orb-text" id="ai-orb-text">Zzz</div>
+                    </div>
+                </div>
+
+                <!-- AI Scores Panel (dynamic) -->
+                <div class="ai-scores-panel" id="ai-scores-panel" style="display: none;">
+                    <div class="score-metric">
+                        <span class="metric-label">STACK SCORE</span>
+                        <div class="metric-value-row">
+                            <div class="metric-progress-bg">
+                                <div class="metric-progress-fill" id="stack-score-fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="metric-num" id="stack-score-num">0</span>
+                        </div>
+                    </div>
+                    <div class="score-metric">
+                        <span class="metric-label">SYNERGY SCORE</span>
+                        <div class="metric-value-row">
+                            <div class="metric-progress-bg">
+                                <div class="metric-progress-fill" id="synergy-score-fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="metric-num" id="synergy-score-num">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="ai-rec-text" id="ai-rec-text">
+                    Based on your health data, we recommend focusing on <strong class="highlight-blue">Sleep</strong> and <strong class="highlight-blue">Recovery</strong> this week.
+                </p>
+
+                <!-- Dynamic Health Impact Section -->
+                <div class="ai-impact-section" id="ai-impact-section" style="display: none;">
+                    <span class="section-label">HEALTH DIMENSION IMPACT</span>
+                    <div class="impact-list" id="ai-impact-list">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Dynamic Suggestions Section -->
+                <div class="ai-suggestion-box" id="ai-suggestion-box" style="display: none;">
+                    <!-- Filled by JS -->
+                </div>
+
+                <!-- Wellness Concierge Chat Console -->
+                <div class="wellness-advisor-console">
+                    <div class="console-divider"></div>
+                    <span class="console-label"><i data-lucide="sparkles"></i> WELLNESS CONCIERGE</span>
+                    <div class="chat-history" id="chat-history">
+                        <div class="chat-bubble advisor-bubble">
+                            Hello. I am your STAKOR Stack Advisor. Select products or ask me anything about STAKOR science.
+                        </div>
+                    </div>
+                    <div class="chat-input-wrapper">
+                        <input type="text" id="chat-input" placeholder="Ask Stakor Wellness Concierge...">
+                        <button id="chat-send-btn"><i data-lucide="arrow-up"></i></button>
+                    </div>
+                </div>
+
+                <button class="ai-cta-btn" id="ai-cta" style="display: none;">
+                    <i data-lucide="sparkles"></i>
+                    <span>Consult STAKOR AI</span>
+                </button>
+            </div>
+
+            <!-- AI Product Analyzer Card -->
+            <div class="ai-analyzer-card" id="ai-analyzer-card" style="display: none;">
+                <div class="analyzer-header">
+                    <span class="analyzer-badge"><i data-lucide="sparkles"></i> AI PRODUCT ANALYZER</span>
+                    <button class="close-analyzer-btn" id="close-analyzer">&times;</button>
+                </div>
+                <div class="analyzer-content" id="analyzer-content">
+                    <!-- Dynamic analysis loaded via JS -->
+                </div>
+            </div>
+
+
+
+            <!-- INTERACTIVE STACK BUILDER CARD -->
+            <div class="stack-builder-card" id="stack-builder">
+                <div class="stack-card-header">
+                    <span class="stack-eyebrow">ACTIVE STACK</span>
+                </div>
+
+                <!-- Dropzones (4 Slots) -->
+                <div class="stack-slots-row">
+                    <div class="stack-slot-wrapper">
+                        <div class="stack-slot empty" data-slot="0">
+                            <div class="slot-placeholder">
+                                <i data-lucide="plus"></i>
+                            </div>
+                            <div class="slot-filled-content"></div>
+                        </div>
+                    </div>
+                    <span class="operator-plus">+</span>
+                    <div class="stack-slot-wrapper">
+                        <div class="stack-slot empty" data-slot="1">
+                            <div class="slot-placeholder">
+                                <i data-lucide="plus"></i>
+                            </div>
+                            <div class="slot-filled-content"></div>
+                        </div>
+                    </div>
+                    <span class="operator-plus">+</span>
+                    <div class="stack-slot-wrapper">
+                        <div class="stack-slot empty" data-slot="2">
+                            <div class="slot-placeholder">
+                                <i data-lucide="plus"></i>
+                            </div>
+                            <div class="slot-filled-content"></div>
+                        </div>
+                    </div>
+                    <span class="operator-plus">+</span>
+                    <div class="stack-slot-wrapper">
+                        <div class="stack-slot empty" data-slot="3">
+                            <div class="slot-placeholder">
+                                <i data-lucide="plus"></i>
+                            </div>
+                            <div class="slot-filled-content"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stack Benefits -->
+                <div class="stack-benefits-section">
+                    <span class="benefits-label">STACK BENEFITS</span>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="benefit-header">
+                                <div class="benefit-icon blue-bg">
+                                    <i data-lucide="moon"></i>
+                                </div>
+                                <span class="benefit-val" id="benefit-sleep">+0%</span>
+                            </div>
+                            <span class="benefit-name">Sleep</span>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-header">
+                                <div class="benefit-icon indigo-bg">
+                                    <i data-lucide="award"></i>
+                                </div>
+                                <span class="benefit-val" id="benefit-recovery">+0%</span>
+                            </div>
+                            <span class="benefit-name">Recovery</span>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-header">
+                                <div class="benefit-icon orange-bg">
+                                    <i data-lucide="zap"></i>
+                                </div>
+                                <span class="benefit-val" id="benefit-energy">+0%</span>
+                            </div>
+                            <span class="benefit-name">Enregy</span>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-header">
+                                <div class="benefit-icon green-bg">
+                                    <i data-lucide="target"></i>
+                                </div>
+                                <span class="benefit-val" id="benefit-focus">+0%</span>
+                            </div>
+                            <span class="benefit-name">Focus</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="build-stack-btn" id="build-stack-submit">
+                    <span>Build Your Stack</span>
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="futuristic-footer">
+        <div class="footer-container">
+          
+          <!-- Section 1 (CTA Card) has been removed as per request -->
+    
+          <!-- SECTION 2: COMPACT FOOTER NAVIGATION -->
+          <div class="footer-nav-grid">
+            <div class="footer-nav-col footer-nav-logo-col">
+              <div class="s10-bottom-logo" style="color: #08142e; font-size: 24px; margin-bottom: 4px;">STAK<span style="color: #2563ff;">OR</span></div>
+              <div style="font-size: 13px; color: #64748b; font-weight: 500;">Health Intelligence Platform</div>
+              <div class="footer-trust-indicators">
+                <div class="footer-trust-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Science Backed</span>
+                </div>
+                <div class="footer-trust-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Privacy First</span>
+                </div>
+                <div class="footer-trust-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>AI Personalized</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="footer-nav-col">
+              <span class="footer-nav-col-title">Health Systems</span>
+              <ul class="footer-nav-links">
+                <li><a href="/subscription.html?products=core">Core</a></li>
+                <li><a href="/subscription.html?products=protein">Protein</a></li>
+                <li><a href="/subscription.html?products=satiety">Satiety</a></li>
+                <li><a href="/subscription.html?products=glucose">Glucose</a></li>
+                <li><a href="/subscription.html?products=balance">Balance</a></li>
+              </ul>
+            </div>
+            
+            <div class="footer-nav-col">
+              <span class="footer-nav-col-title">Tools</span>
+              <ul class="footer-nav-links">
+                <li><a href="/assessment.html">Assessment</a></li>
+                <li><a href="/Universe.Html#health-radar">Health Score</a></li>
+                <li><a href="/Universe.Html#stack-builder">Stack Builder</a></li>
+                <li><a href="/Universe.Html#insights">AI Concierge</a></li>
+              </ul>
+            </div>
+            
+            <div class="footer-nav-col">
+              <span class="footer-nav-col-title">Company</span>
+              <ul class="footer-nav-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Research</a></li>
+                <li><a href="#">Careers</a></li>
+              </ul>
+            </div>
+            
+            <div class="footer-nav-col">
+              <span class="footer-nav-col-title">Support</span>
+              <ul class="footer-nav-links">
+                <li><a href="/subscription.html#faq">FAQ</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="/subscription.html">Subscription</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+    
+          <!-- SECTION 3: TRUST STRIP -->
+          <div class="footer-trust-strip">
+            <div class="footer-trust-strip-item">
+              <div class="footer-trust-strip-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v8L4.36 20.64A1 1 0 0 0 5.25 22h13.5a1 1 0 0 0 .89-1.36L14 10V2z"></path><path d="M8.5 2h7"></path><path d="M6 18h12"></path></svg>
+              </div>
+              <span class="footer-trust-strip-label">Science Backed</span>
+            </div>
+            <div class="footer-trust-strip-item">
+              <div class="footer-trust-strip-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <span class="footer-trust-strip-label">Privacy First</span>
+            </div>
+            <div class="footer-trust-strip-item">
+              <div class="footer-trust-strip-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-.877a.5.5 0 0 1 0-.972l6.135-.877A2 2 0 0 0 9.937 9.938l.877-6.135a.5.5 0 0 1 .972 0l.877 6.135a2 2 0 0 0 1.438 1.438l6.135.877a.5.5 0 0 1 0 .972l-6.135.877a2 2 0 0 0-1.438 1.438l-.877 6.135a.5.5 0 0 1-.972 0l-.877-6.135z"></path><path d="M20 3a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-1z"></path><path d="M4 19a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H4z"></path></svg>
+              </div>
+              <span class="footer-trust-strip-label">AI Personalized</span>
+            </div>
+            <div class="footer-trust-strip-item">
+              <div class="footer-trust-strip-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M3 21v-5h5"></path></svg>
+              </div>
+              <span class="footer-trust-strip-label">Flexible Subscription</span>
+            </div>
+          </div>
+    
+          <!-- SECTION 4: LEGAL BAR -->
+          <div class="footer-legal-bar">
+            <div class="footer-legal-left">
+              © 2025 STAKOR. All rights reserved.
+            </div>
+            <div class="footer-legal-center">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms</a>
+              <a href="#">Cookies</a>
+            </div>
+            <div class="footer-legal-right">
+              <span class="footer-legal-tagline">Optimize. Evolve. Thrive.</span>
+              <div class="footer-socials">
+                <a href="#" class="footer-social-link" title="Instagram">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="#" class="footer-social-link" title="LinkedIn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <a href="#" class="footer-social-link" title="YouTube">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </a>
+                <a href="#" class="footer-social-link" title="X">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768 M20 4l-6.768 6.768"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+    </footer>
+
+    <!-- Script Entry Point -->
+    <script src="/js/app.js"></script>
+    <script>
+        // Initialize lucide icons
+        lucide.createIcons();
+
+        // Mobile Navigation & Scroll Init
+        const initNavbar = () => {
+          const menuBtn = document.querySelector('.nav-menu-btn');
+          const nav = document.querySelector('nav') || document.querySelector('.header-nav');
+          if (menuBtn && nav) {
+            menuBtn.addEventListener('click', () => {
+              nav.classList.toggle('nav-open');
+              const isOpen = nav.classList.contains('nav-open');
+              if (isOpen) {
+                menuBtn.innerHTML = `
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                `;
+              } else {
+                menuBtn.innerHTML = `
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                  </svg>
+                `;
+              }
+            });
+
+            // Hide/Show Navbar on Scroll
+            const scrollContainer = document.querySelector('.main-content') || window;
+            let lastScrollY = scrollContainer === window ? 
+              (window.pageYOffset || document.documentElement.scrollTop) : 
+              scrollContainer.scrollTop;
+              
+            scrollContainer.addEventListener('scroll', () => {
+              const currentScrollY = scrollContainer === window ? 
+                (window.pageYOffset || document.documentElement.scrollTop) : 
+                scrollContainer.scrollTop;
+              if (nav.classList.contains('nav-open')) return;
+              
+              if (currentScrollY <= 0) {
+                nav.classList.remove('scroll-hide');
+                document.body.classList.remove('navbar-hidden');
+                return;
+              }
+              
+              if (currentScrollY > lastScrollY && !nav.classList.contains('scroll-hide')) {
+                nav.classList.add('scroll-hide');
+                document.body.classList.add('navbar-hidden');
+              } else if (currentScrollY < lastScrollY && nav.classList.contains('scroll-hide')) {
+                nav.classList.remove('scroll-hide');
+                document.body.classList.remove('navbar-hidden');
+              }
+              lastScrollY = currentScrollY;
+            }, { passive: true });
+          }
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initNavbar);
+        } else {
+          initNavbar();
+        }
+    </script>
+</body>
+</html>

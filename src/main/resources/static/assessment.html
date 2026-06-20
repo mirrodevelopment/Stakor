@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAKOR | Health OS Configurator</title>
+    <!-- Google Fonts: Inter, Montserrat, Lexend Giga, Tektur, Outfit, Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Lexend+Giga:wght@400;500;600;700;800;900&family=Tektur:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/assessment.css">
+    <!-- Preload and Load Spline Viewer Script & Scene early for faster rendering -->
+    <link rel="preload" href="https://unpkg.com/@splinetool/viewer@1.12.97/build/spline-viewer.js" as="script">
+    <link rel="preload" href="https://prod.spline.design/RnyL6qbXgBRGUggt/scene.splinecode" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="https://prod.spline.design/jrwjM0DYSQkbIioB/scene.splinecode" as="fetch" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.97/build/spline-viewer.js"></script>
+</head>
+<body class="assess-body">
+
+    <!-- =========================================================
+         APPLE SPATIAL CONFIGURATOR SCROLL JOURNEY
+         ========================================================= -->
+    <div class="assessment-container">
+        
+        <!-- Fixed Viewport overlay with visual elements -->
+        <div class="sticky-viewport">
+            
+            <!-- NAV -->
+            <nav class="assessment-nav">
+                <a href="/" class="logo">
+                    <img src="images/Logo.png" alt="STAKOR" class="logo-img">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/collections">Collections</a></li>
+                    <li><a href="/universe">Health Universe</a></li>
+                    <li><a href="/subscribe">Subscription</a></li>
+                    <li class="nav-active"><a href="/assessment">Assessment</a></li>
+                </ul>
+                <button class="nav-cta" type="button" onclick="window.location.href='/login'">
+                    Sign In
+                    <span class="nav-cta-icon">👤</span>
+                </button>
+                <button class="nav-menu-btn" type="button" aria-label="Toggle menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </nav>
+
+            <!-- Scroll Down Indicator (visible only on Step 1) -->
+            <div class="scroll-down-indicator" id="scrollDownBtn">
+                <span class="scroll-text">SCROLL TO CONFIG</span>
+                <div class="mouse-icon">
+                    <div class="wheel-dot"></div>
+                </div>
+            </div>
+
+            <!-- Background/Left: 3D DNA Visualizer -->
+            <div class="spline-wrapper">
+                <spline-viewer loading-anim-type="none" url="https://prod.spline.design/RnyL6qbXgBRGUggt/scene.splinecode"></spline-viewer>
+            </div>
+
+            <!-- Configurator Frosted Panel Card -->
+            <div class="step-card">
+                <!-- Volumetric Light Halos directly behind card structure -->
+                <div class="card-glow-halo blue"></div>
+                <div class="card-glow-halo purple"></div>
+
+                <!-- Floating Ambient Particles inside Card -->
+                <div class="card-particles">
+                    <span class="particle" style="width: 4px; height: 4px; left: 15%; top: 20%; animation-delay: 0s; animation-duration: 8s;"></span>
+                    <span class="particle" style="width: 3px; height: 3px; left: 85%; top: 35%; animation-delay: 2s; animation-duration: 10s;"></span>
+                    <span class="particle" style="width: 5px; height: 5px; left: 25%; top: 75%; animation-delay: 4s; animation-duration: 7s;"></span>
+                    <span class="particle" style="width: 2px; height: 2px; left: 70%; top: 80%; animation-delay: 1.5s; animation-duration: 9s;"></span>
+                    <span class="particle" style="width: 4px; height: 4px; left: 5%; top: 60%; animation-delay: 3s; animation-duration: 11s;"></span>
+                    <span class="particle" style="width: 3px; height: 3px; left: 90%; top: 15%; animation-delay: 5.5s; animation-duration: 8s;"></span>
+                </div>
+
+                <!-- Dynamic Content Container -->
+                <div class="card-body-content" id="card-content-block">
+                    <!-- Loaded dynamically via JS -->
+                </div>
+
+                <!-- Card Bottom Footer (Progress & Navigation) -->
+                <div class="card-footer" id="card-footer-block">
+                    <!-- Progress indicator matching mockup -->
+                    <div class="progress-indicator-wrap">
+                        <div class="progress-ring-mini">
+                            <svg viewBox="0 0 36 36">
+                                <circle class="ring-bg" cx="18" cy="18" r="16"></circle>
+                                <circle class="ring-fill" id="miniProgressRing" cx="18" cy="18" r="16" stroke-dasharray="100" stroke-dashoffset="100"></circle>
+                            </svg>
+                            <span class="progress-num" id="miniProgressNum">01</span>
+                        </div>
+                        <span class="progress-total"><span id="miniProgressTotal">05</span> Systems</span>
+                    </div>
+
+                    <!-- Circular Next Button -->
+                    <button type="button" class="btn-circle-next" id="btn-next" aria-label="Next step">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 6 full-screen scroll anchor snapping sections -->
+        <div class="scroll-section" data-step="1"></div>
+        <div class="scroll-section" data-step="2"></div>
+        <div class="scroll-section" data-step="3"></div>
+        <div class="scroll-section" data-step="4"></div>
+        <div class="scroll-section" data-step="5"></div>
+        <div class="scroll-section" data-step="6"></div>
+
+        <!-- Pre-warmed spline viewer for the AI face to avoid initial WebGL compilation delay -->
+        <div style="position: absolute; width: 1px; height: 1px; opacity: 0.001; overflow: hidden; pointer-events: none; z-index: -9999;" id="prewarmed-ai-face-container">
+            <spline-viewer url="https://prod.spline.design/jrwjM0DYSQkbIioB/scene.splinecode"></spline-viewer>
+        </div>
+
+    </div>
+
+    <!-- GSAP Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <!-- Script Entry Point -->
+    <script src="/js/assessment.js"></script>
+    <script>
+        // Mobile Navigation Menu Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+          const menuBtn = document.querySelector('.nav-menu-btn');
+          const nav = document.querySelector('.assessment-nav');
+          if (menuBtn && nav) {
+            menuBtn.addEventListener('click', () => {
+              nav.classList.toggle('nav-open');
+              const isOpen = nav.classList.contains('nav-open');
+              if (isOpen) {
+                menuBtn.innerHTML = `
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                `;
+              } else {
+                menuBtn.innerHTML = `
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                  </svg>
+                `;
+              }
+            });
+          }
+        });
+    </script>
+</body>
+</html>
